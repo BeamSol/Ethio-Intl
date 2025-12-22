@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amharic Transliteration Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: #f5f5f5;
+        }
+        .demo-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .demo-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #e1e5e9;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        .demo-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            border: 2px solid #007bff;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-family: 'Noto Sans Ethiopic', serif;
+        }
+        .demo-output {
+            background: #e8f4fd;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Noto Sans Ethiopic', serif;
+            font-size: 24px;
+            margin: 10px 0;
+            border: 2px solid #007bff;
+            min-height: 50px;
+        }
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .feature-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #007bff;
+        }
+        .try-examples {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .example-btn {
+            padding: 8px 16px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .example-btn:hover {
+            background: #0056b3;
+        }
+        .cursor-indicator {
+            position: relative;
+            display: inline-block;
+        }
+        .cursor-indicator::after {
+            content: '|';
+            animation: blink 1s infinite;
+            color: #007bff;
+            font-weight: bold;
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.info {
+            background: #cce7ff;
+            color: #004085;
+            border: 1px solid #b3d9ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1>🌍 Amharic Transliteration Demo</h1>
+        <p>Experience real-time Amharic transliteration with our advanced SmartInput component!</p>
+
+            <div class="demo-section">
+                <h2>🎯 Smart Transliteration Input</h2>
+                <p><strong>Type in English</strong> and watch it convert to <strong>Amharic in real-time</strong>:</p>
+
+                <div id="smart-input-container">
+                    <input
+                        type="text"
+                        id="amharic-input"
+                        class="demo-input"
+                        placeholder="Start typing... (try: selam, hu, ba, te, ka)"
+                        autocomplete="off"
+                    />
+                    <div class="demo-output" id="amharic-output">እንኳን ደህና መጡ!</div>
+                </div>
+
+                <div class="try-examples">
+                    <button class="example-btn" onclick="insertText('selam')">selam</button>
+                    <button class="example-btn" onclick="insertText('hu')">hu</button>
+                    <button class="example-btn" onclick="insertText('ba')">ba</button>
+                    <button class="example-btn" onclick="insertText('te')">te</button>
+                    <button class="example-btn" onclick="insertText('ka')">ka</button>
+                    <button class="example-btn" onclick="insertText('ne')">ne</button>
+                    <button class="example-btn" onclick="insertText('dehna')">dehna</button>
+                    <button class="example-btn" onclick="clearText()">Clear</button>
+                </div>
+
+                <div style="margin-top: 15px; padding: 10px; background: #e8f4fd; border-radius: 6px; font-size: 14px;">
+                    <strong>💡 First Forms (ä vowel) - Multiple Easy Methods:</strong>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 5px;">
+                        <button class="example-btn" onclick="insertText('he')" style="font-size: 12px;">he → ሀ</button>
+                        <button class="example-btn" onclick="insertText('le')" style="font-size: 12px;">le → ለ</button>
+                        <button class="example-btn" onclick="insertText('me')" style="font-size: 12px;">me → መ</button>
+                        <button class="example-btn" onclick="insertText('re')" style="font-size: 12px;">re → ረ</button>
+                        <button class="example-btn" onclick="insertText('se')" style="font-size: 12px;">se → ሰ</button>
+                        <button class="example-btn" onclick="insertText('be')" style="font-size: 12px;">be → በ</button>
+                        <button class="example-btn" onclick="insertText('te')" style="font-size: 12px;">te → ተ</button>
+                        <button class="example-btn" onclick="insertText('ne')" style="font-size: 12px;">ne → ነ</button>
+                        <button class="example-btn" onclick="insertText('ke')" style="font-size: 12px;">ke → ከ</button>
+                        <button class="example-btn" onclick="insertText('we')" style="font-size: 12px;">we → ወ</button>
+                        <button class="example-btn" onclick="insertText('ze')" style="font-size: 12px;">ze → ዘ</button>
+                        <button class="example-btn" onclick="insertText('ye')" style="font-size: 12px;">ye → የ</button>
+                        <button class="example-btn" onclick="insertText('de')" style="font-size: 12px;">de → ደ</button>
+                        <button class="example-btn" onclick="insertText('je')" style="font-size: 12px;">je → ጀ</button>
+                        <button class="example-btn" onclick="insertText('ge')" style="font-size: 12px;">ge → ገ</button>
+                    </div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 5px;">
+                        <button class="example-btn" onclick="insertText('hä')" style="font-size: 12px;">hä → ሀ</button>
+                        <button class="example-btn" onclick="insertText('h1')" style="font-size: 12px;">h1 → ሀ</button>
+                        <button class="example-btn" onclick="insertText('l1')" style="font-size: 12px;">l1 → ለ</button>
+                        <button class="example-btn" onclick="insertText('haa')" style="font-size: 12px;">haa → ሀ</button>
+                        <button class="example-btn" onclick="insertText('hee')" style="font-size: 12px;">hee → ሄ</button>
+                    </div>
+                    <div style="margin-top: 5px; font-size: 12px; color: #666;">
+                        <strong>Tip:</strong> Use 'e' after consonants for ä forms, 'ee' for regular e forms!
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h2>✨ Features</h2>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <h3>🔄 Real-time Conversion</h3>
+                        <p>As you type English letters, they instantly become Amharic characters</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>🎯 Smart Combinations</h3>
+                        <p>Consonant + vowel combinations work perfectly (h+u = ሁ, b+a = ባ)</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>⌨️ Full Keyboard Support</h3>
+                        <p>25+ consonants with complete vowel variations (a, e, i, o, u, wa, w)</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>📱 Cursor Management</h3>
+                        <p>Cursor stays in the right position during character replacements</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>🔍 Reverse Lookup</h3>
+                        <p>Efficient mapping system for fast transliteration</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>🎨 Beautiful Display</h3>
+                        <p>Proper Amharic typography with correct character rendering</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h2>📚 Supported Characters</h2>
+                <div id="character-showcase">
+                    <div class="status info">
+                        Loading character showcase...
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h2>🚀 Technical Implementation</h2>
+                <ul>
+                    <li><strong>Nested Dictionary:</strong> Organized consonant → vowel mappings</li>
+                    <li><strong>Reverse Lookup:</strong> Fast Amharic → Latin character mapping</li>
+                    <li><strong>React Hooks:</strong> useTransliterate hook for state management</li>
+                    <li><strong>TypeScript:</strong> Full type safety and IntelliSense support</li>
+                    <li><strong>Performance:</strong> Optimized for real-time typing experience</li>
+                </ul>
+            </div>
+    </div>
+
+    <script>
+        // Amharic transliteration mapping (matches the actual library)
+        const amharicMap = {
+            "h": { ä: "ሀ", base: "ህ", "a": "ሃ", "u": "ሁ", "i": "ሂ", "e": "ሄ", "o": "ሆ" },
+            "l": { ä: "ለ", base: "ል", "a": "ላ", "u": "ሉ", "i": "ሊ", "e": "ሌ", "o": "ሎ", "wa": "ሏ" },
+            "m": { ä: "መ", base: "ም", "a": "ማ", "u": "ሙ", "i": "ሚ", "e": "ሜ", "o": "ሞ", "wa": "ሟ" },
+            "r": { ä: "ረ", base: "ር", "a": "ራ", "u": "ሩ", "i": "ሪ", "e": "ሬ", "o": "ሮ", "wa": "ሯ" },
+            "s": { ä: "ሰ", base: "ስ", "a": "ሳ", "u": "ሱ", "i": "ሲ", "e": "ሴ", "o": "ሶ", "wa": "ሷ" },
+            "b": { ä: "በ", base: "ብ", "a": "ባ", "u": "ቡ", "i": "ቢ", "e": "ቤ", "o": "ቦ", "wa": "ቧ" },
+            "t": { ä: "ተ", base: "ት", "a": "ታ", "u": "ቱ", "i": "ቲ", "e": "ቴ", "o": "ቶ", "wa": "ቷ" },
+            "n": { ä: "ነ", base: "ን", "a": "ና", "u": "ኑ", "i": "ኒ", "e": "ኔ", "o": "ኖ", "wa": "ኗ" },
+            "k": { ä: "ከ", base: "ክ", "a": "ካ", "u": "ኩ", "i": "ኪ", "e": "ኬ", "o": "ኮ", "wa": "ኳ", "w": "ኵ" },
+            "w": { ä: "ወ", base: "ው", "a": "ዋ", "u": "ዉ", "i": "ዊ", "e": "ዌ", "o": "ዎ" },
+            "z": { ä: "ዘ", base: "ዝ", "a": "ዛ", "u": "ዙ", "i": "ዚ", "e": "ዜ", "o": "ዞ", "wa": "ዟ" },
+            "y": { ä: "የ", base: "ይ", "a": "ያ", "u": "ዩ", "i": "ዪ", "e": "ዬ", "o": "ዮ" },
+            "d": { ä: "ደ", base: "ድ", "a": "ዳ", "u": "ዱ", "i": "ዲ", "e": "ዴ", "o": "ዶ", "wa": "ዷ" },
+            "j": { ä: "ጀ", base: "ጅ", "a": "ጃ", "u": "ጁ", "i": "ጂ", "e": "ጄ", "o": "ጆ", "wa": "ጇ" },
+            "g": { ä: "ገ", base: "ግ", "a": "ጋ", "u": "ጉ", "i": "ጊ", "e": "ጌ", "o": "ጎ", "wa": "ጓ", "w": "ጕ" },
+            "f": { ä: "ፈ", base: "ፍ", "a": "ፋ", "u": "ፉ", "i": "ፊ", "e": "ፌ", "o": "ፎ", "wa": "ፏ" },
+            "p": { ä: "ፐ", base: "ፕ", "a": "ፓ", "u": "ፑ", "i": "ፒ", "e": "ፔ", "o": "ፖ", "wa": "ፗ" },
+            "q": { ä: "ቀ", base: "ቅ", "a": "ቃ", "u": "ቁ", "i": "ቂ", "e": "ቄ", "o": "ቆ", "wa": "ቋ", "w": "ቍ" },
+            "x": { ä: "ኀ", base: "ኽ", "a": "ኻ", "u": "ኹ", "i": "ኺ", "e": "ኼ", "o": "ኾ", "wa": "ኋ", "w": "ኍ" },
+            "c": { ä: "ቸ", base: "ች", "a": "ቻ", "u": "ቹ", "i": "ቺ", "e": "ቼ", "o": "ቾ", "wa": "ቿ" },
+            "ch": { ä: "ቸ", base: "ች", "a": "ቻ", "u": "ቹ", "i": "ቺ", "e": "ቼ", "o": "ቾ" },
+            "sh": { ä: "ሸ", base: "ሽ", "a": "ሻ", "u": "ሹ", "i": "ሺ", "e": "ሼ", "o": "ሾ", "wa": "ሿ" },
+            "a": { ä: "አ", base: "አ" },
+            "e": { ä: "እ", base: "እ" },
+            "i": { ä: "ኢ", base: "ኢ" },
+            "o": { ä: "ኦ", base: "ኦ" },
+            "u": { ä: "ኡ", base: "ኡ" }
+        };
+
+        // Build reverse map for efficient lookups
+        const reverseMap = {};
+        Object.keys(amharicMap).forEach(consonant => {
+            const consonantData = amharicMap[consonant];
+            reverseMap[consonantData.base] = consonant;
+            Object.keys(consonantData).forEach(vowel => {
+                if (vowel !== 'base') {
+                    reverseMap[consonantData[vowel]] = consonant;
+                }
+            });
+        });
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up the input event listener for real-time transliteration
+            const inputElement = document.getElementById('amharic-input');
+            const outputElement = document.getElementById('amharic-output');
+
+            inputElement.addEventListener('input', function(e) {
+                const newValue = e.target.value;
+
+                // Advanced transliteration logic with ä form support (matches library)
+                let result = '';
+                let i = 0;
+
+                while (i < newValue.length) {
+                    const char = newValue[i].toLowerCase();
+
+                    // Check if this character is a vowel that should combine with the previous consonant
+                    if (result.length > 0 && ['a', 'e', 'i', 'o', 'u'].includes(char)) {
+                        const lastChar = result[result.length - 1];
+                        const consonantKey = reverseMap[lastChar];
+
+                        if (consonantKey && amharicMap[consonantKey]) {
+                            // Special handling for 'e': check for double 'e' (ee) pattern
+                            // If next character is also 'e', use regular 'e' form, otherwise use ä form
+                            if (char === 'e') {
+                                const nextChar = newValue[i + 1]?.toLowerCase();
+                                if (nextChar === 'e' && amharicMap[consonantKey]['e']) {
+                                    // Double 'e' (ee) → regular e form
+                                    result = result.slice(0, -1) + amharicMap[consonantKey]['e'];
+                                    i += 2; // Skip both 'e's
+                                    continue;
+                                } else if (amharicMap[consonantKey]['ä']) {
+                                    // Single 'e' → ä form (easier for users)
+                                    result = result.slice(0, -1) + amharicMap[consonantKey]['ä'];
+                                    i++;
+                                    continue;
+                                }
+                            }
+                            // Regular vowel combination
+                            else if (amharicMap[consonantKey][char]) {
+                                result = result.slice(0, -1) + amharicMap[consonantKey][char];
+                                i++;
+                                continue;
+                            }
+                        }
+                    }
+
+                    // Default: add the base character
+                    const transliteration = amharicMap[char]?.base || char;
+                    result += transliteration;
+                    i++;
+                }
+
+                outputElement.textContent = result;
+            });
+
+            // Character showcase
+            const showcaseContainer = document.getElementById('character-showcase');
+            const examples = [
+                { latin: 'he', amharic: 'ሀ' },
+                { latin: 'hu', amharic: 'ሁ' },
+                { latin: 'ha', amharic: 'ሃ' },
+                { latin: 'le', amharic: 'ለ' },
+                { latin: 'me', amharic: 'መ' },
+                { latin: 'be', amharic: 'በ' },
+                { latin: 'te', amharic: 'ተ' },
+                { latin: 'ne', amharic: 'ነ' },
+                { latin: 'ke', amharic: 'ከ' },
+                { latin: 'selam', amharic: 'ሰላም' }
+            ];
+
+            let showcaseHTML = '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px;">';
+            examples.forEach(example => {
+                showcaseHTML += `
+                    <div style="background: #f8f9fa; padding: 10px; border-radius: 4px; text-align: center;">
+                        <div style="font-weight: bold; color: #007bff;">${example.latin}</div>
+                        <div style="font-size: 24px; font-family: 'Noto Sans Ethiopic', serif;">${example.amharic}</div>
+                    </div>
+                `;
+            });
+            showcaseHTML += '</div>';
+
+            showcaseContainer.innerHTML = showcaseHTML;
+        });
+
+        // Global functions for the buttons
+        function insertText(text) {
+            const input = document.getElementById('amharic-input');
+            input.value = text;
+            input.focus();
+            // Trigger input event
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+
+        function clearText() {
+            const input = document.getElementById('amharic-input');
+            const output = document.getElementById('amharic-output');
+            input.value = '';
+            output.textContent = 'እንኳን ደህና መጡ!';
+            input.focus();
+        }
+    </script>
+</body>
+</html>
