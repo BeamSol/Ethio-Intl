@@ -18,5 +18,5 @@ export {
 } from './utils';
 
 // Types
-export type { EthioIntlConfig, Language } from './localization/types';
+export type { EthioProviderProps, EthioIntlHookResult, Language } from './localization/types';
 

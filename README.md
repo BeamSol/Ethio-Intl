@@ -178,6 +178,63 @@ const ethiopian = toEthiopianDate(new Date());
 // { year: 2017, month: 4, day: 7, monthName: 'Tahsas' }
 ```
 
+## 🌐 Localization (NEW!)
+
+### Simplified i18n Wrapper
+
+No more complex i18next configuration! Just provide your translations and let us handle the rest.
+
+```tsx
+import React from 'react';
+import { EthioProvider, useEthioIntl } from 'ethio-intl';
+
+// Define your translations
+const translations = {
+  en: {
+    translation: {
+      welcome: 'Welcome!',
+      greeting: 'Hello there'
+    }
+  },
+  am: {
+    translation: {
+      welcome: 'እንኳን ደህና መጡ!',
+      greeting: 'ሰላም'
+    }
+  }
+};
+
+function App() {
+  return (
+    <EthioProvider
+      resources={translations}
+      defaultLang="en"
+      fallbackLang="en"
+    >
+      <MyComponent />
+    </EthioProvider>
+  );
+}
+
+function MyComponent() {
+  const { t, currentLang, changeLanguage, supportedLangs } = useEthioIntl();
+
+  return (
+    <div>
+      <h1>{t('welcome')}</h1>
+      <p>{t('greeting')}</p>
+
+      <p>Current language: {currentLang}</p>
+      <p>Available: {supportedLangs.join(', ')}</p>
+
+      <button onClick={() => changeLanguage('am')}>
+        Switch to Amharic
+      </button>
+    </div>
+  );
+}
+```
+
 ## 🎨 Styling
 
 ### CSS Classes

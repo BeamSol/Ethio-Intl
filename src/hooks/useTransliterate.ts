@@ -45,7 +45,7 @@ export const useTransliterate = (
                           // Special handling for 'e': check for double 'e' (ee) pattern
                           // If next character is also 'e', use regular 'e' form, otherwise use ä form
                           if (char === 'e') {
-                            const nextChar = newValue[i + 1]?.toLowerCase();
+                            const nextChar = text[i + 1]?.toLowerCase();
                             if (nextChar === 'e' && amharicMap[consonantKey]['e']) {
                               // Double 'e' (ee) → regular e form
                               result = result.slice(0, -1) + amharicMap[consonantKey]['e'];

@@ -1,16 +1,16 @@
-export type Language = 'en' | 'am' | 'om' | 'fr' | 'ti' | 'so';
+export type Language = string;
 
-export interface EthioIntlConfig {
-  defaultLanguage?: Language;
-  fallbackLanguage?: Language;
-  supportedLanguages?: Language[];
-  resources?: Record<Language, Record<string, any>>;
+export interface EthioProviderProps {
+  resources: Record<Language, Record<string, any>>;
+  defaultLang?: string;
+  fallbackLang?: string;
+  children: React.ReactNode;
 }
 
-export interface EthioIntlContextValue {
-  language: Language;
-  changeLanguage: (lang: Language) => void;
+export interface EthioIntlHookResult {
   t: (key: string, options?: any) => string;
-  isLoading: boolean;
+  currentLang: string;
+  changeLanguage: (langCode: string) => void;
+  supportedLangs: string[];
 }
 
