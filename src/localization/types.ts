@@ -14,3 +14,9 @@ export interface EthioIntlHookResult {
   supportedLangs: string[];
 }
 
+export interface EthioIntlAdvancedHookResult extends EthioIntlHookResult {
+  tNamespace: (namespace: string, key: string, options?: any) => string;
+  detectLanguage: () => string;
+  isLanguageSupported: (lang: string, resources?: Record<string, any>) => boolean;
+}
+

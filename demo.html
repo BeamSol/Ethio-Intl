@@ -229,8 +229,10 @@
         <p>Simple language switching with zero configuration:</p>
 
         <div class="lang-buttons">
-            <button class="lang-btn active" onclick="switchLanguage('en')">English</button>
-            <button class="lang-btn" onclick="switchLanguage('am')">አማርኛ</button>
+            <button class="lang-btn active" onclick="switchLanguage('en')">🇺🇸 English</button>
+            <button class="lang-btn" onclick="switchLanguage('am')">🇪🇹 አማርኛ</button>
+            <button class="lang-btn" onclick="switchLanguage('ti')">🇪🇷 ትግርኛ</button>
+            <button class="lang-btn" onclick="switchLanguage('om')">🇪🇹 Afaan Oromoo</button>
         </div>
 
         <div class="translation-box" id="welcome-text">
@@ -241,26 +243,72 @@
             Experience the power of modern Amharic localization
         </div>
 
-        <h3>How it works:</h3>
-        <div class="code-example">
-import { EthioProvider, useEthioIntl } from 'ethio-intl';
+        <div class="translation-box" id="user-count-text">
+            We have 1,234 users
+        </div>
 
+        <h3>🚀 Namespaced Translations</h3>
+        <div class="translation-box">
+            <strong id="namespace-header">Advanced Features</strong><br>
+            <small id="namespace-subtitle">Multi-language support made simple</small>
+        </div>
+
+        <h3>💻 Enhanced API:</h3>
+        <div class="code-example">
+// Multiple languages with namespaces
 const translations = {
-  en: { translation: { hello: 'Hello', bye: 'Goodbye' } },
-  am: { translation: { hello: 'ሰላም', bye: 'ያቀር' } }
+  en: {
+    translation: {
+      welcome: 'Welcome!',
+      userCount: 'We have {count} users'
+    },
+    auth: {
+      login: 'Login',
+      logout: 'Logout'
+    }
+  },
+  am: {
+    translation: {
+      welcome: 'እንኳን ደህና መጡ!',
+      userCount: '{count} ተጠቃሚዎች አሉን'
+    },
+    auth: {
+      login: 'ግባ',
+      logout: 'ውጣ'
+    }
+  }
 };
 
 function App() {
   return (
-    &lt;EthioProvider resources={translations}&gt;
-      &lt;MyComponent /&gt;
+    &lt;EthioProvider resources={translations} defaultLang="am"&gt;
+      &lt;Dashboard /&gt;
     &lt;/EthioProvider&gt;
   );
 }
 
-function MyComponent() {
-  const { t, currentLang, changeLanguage } = useEthioIntl();
-  return &lt;h1&gt;{t('hello')}&lt;/h1&gt;;
+function Dashboard() {
+  const {
+    t, tNamespace, currentLang, changeLanguage,
+    supportedLangs, detectLanguage, isLanguageSupported
+  } = useEthioIntl();
+
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;{t('welcome')}&lt;/h1&gt;
+      &lt;p&gt;{t('userCount', { count: 1234 })}&lt;/p&gt;
+      &lt;p&gt;{tNamespace('auth', 'login')}&lt;/p&gt;
+
+      &lt;select onChange={(e) =&gt; changeLanguage(e.target.value)}&gt;
+        {supportedLangs.map(lang =&gt; (
+          &lt;option key={lang} value={lang}&gt;{lang.toUpperCase()}&lt;/option&gt;
+        ))}
+      &lt;/select&gt;
+
+      &lt;p&gt;Current: {currentLang}&lt;/p&gt;
+      &lt;p&gt;Browser language: {detectLanguage()}&lt;/p&gt;
+    &lt;/div&gt;
+  );
 }</code></div>
 
         <div class="info-box">
@@ -397,28 +445,85 @@ function MyComponent() {
             event.target.classList.add('active');
         }
 
-        // Language switching functionality (simplified)
+        // Enhanced multi-language functionality (simulating our provider)
         const translations = {
             en: {
-                welcome: 'Welcome to Ethio-Intl!',
-                description: 'Experience the power of modern Amharic localization'
+                translation: {
+                    welcome: 'Welcome to Ethio-Intl!',
+                    description: 'Experience the power of modern Amharic localization',
+                    button: 'Change Language',
+                    greeting: 'Hello',
+                    userCount: 'We have {count} users',
+                    namespaced: {
+                        header: 'Advanced Features',
+                        subtitle: 'Multi-language support made simple'
+                    }
+                }
             },
             am: {
-                welcome: 'እንኳን ደህና መጡ ወደ ኢትዮ-ኢንትል!',
-                description: 'የአሁኑ የአማርኛ አካባቢ መጠቅለያ ኃይል ለምስራቅ'
+                translation: {
+                    welcome: 'እንኳን ደህና መጡ ወደ ኢትዮ-ኢንትል!',
+                    description: 'የአሁኑ የአማርኛ አካባቢ መጠቅለያ ኃይል ለምስራቅ',
+                    button: 'ቋንቋ ቀይር',
+                    greeting: 'ሰላም',
+                    userCount: '{count} ተጠቃሚዎች አሉን',
+                    namespaced: {
+                        header: 'የላቀ ባህሪያት',
+                        subtitle: 'የተለያዩ ቋንቋዎች ድጋፍ ቀላል ተደርጓል'
+                    }
+                }
+            },
+            ti: {
+                translation: {
+                    welcome: 'ቅድም ኣብ ሓቅ መጻእኩም ናብ ኢትዮ-ኢንትል!',
+                    description: 'ሓይሊ የተለመደ ትግርኛ አካባቢ መጠቅለያ ኃይል',
+                    button: 'ቛንቋ ለውጢ',
+                    greeting: 'ሰላም',
+                    userCount: '{count} ተጠቃሚታት ኣለውን',
+                    namespaced: {
+                        header: 'እተያየደ ባህርያት',
+                        subtitle: 'ብዙሕ ቛንቋት ድያጋፍ ንክኸውን ቀሊል ተሰሪሑ'
+                    }
+                }
+            },
+            om: {
+                translation: {
+                    welcome: 'Baga nagaan dhuftan Ethio-Intl!',
+                    description: 'Hojii dandeettii localization Afaan Oromoo ammee',
+                    button: 'Afaan jijjiiri',
+                    greeting: 'Akkam',
+                    userCount: '{count} namoota qabna',
+                    namespaced: {
+                        header: 'Dandeettii Olaanaa',
+                        subtitle: 'Deggertoota afaan hedduu salphaa godhe'
+                    }
+                }
             }
         };
 
+        let currentLanguage = 'en';
+
         function switchLanguage(lang) {
+            currentLanguage = lang;
+
             // Update active button
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
             event.target.classList.add('active');
 
-            // Update translations (simulating our context behavior)
-            document.getElementById('welcome-text').textContent = translations[lang].welcome;
-            document.getElementById('description-text').textContent = translations[lang].description;
+            // Update translations with interpolation examples
+            const welcomeText = translations[lang].translation.welcome;
+            const descriptionText = translations[lang].translation.description;
+            const userCountText = translations[lang].translation.userCount.replace('{count}', '1,234');
+
+            document.getElementById('welcome-text').textContent = welcomeText;
+            document.getElementById('description-text').textContent = descriptionText;
+            document.getElementById('user-count-text').textContent = userCountText;
+
+            // Update namespaced example
+            document.getElementById('namespace-header').textContent = translations[lang].translation.namespaced.header;
+            document.getElementById('namespace-subtitle').textContent = translations[lang].translation.namespaced.subtitle;
         }
 
         // Amharic transliteration mapping (matches the actual library)

@@ -178,62 +178,283 @@ const ethiopian = toEthiopianDate(new Date());
 // { year: 2017, month: 4, day: 7, monthName: 'Tahsas' }
 ```
 
-## 🌐 Localization (NEW!)
+## 🌍 Multi-Language Localization
 
-### Simplified i18n Wrapper
+**Zero-configuration i18n for Ethiopian applications!** Pure React implementation with no external dependencies.
 
-No more complex i18next configuration! Just provide your translations and let us handle the rest.
+### 🚀 Quick Start
+
+```bash
+npm install ethio-intl
+```
 
 ```tsx
 import React from 'react';
 import { EthioProvider, useEthioIntl } from 'ethio-intl';
 
-// Define your translations
+// 1. Define your translations (supports unlimited languages)
 const translations = {
   en: {
     translation: {
-      welcome: 'Welcome!',
-      greeting: 'Hello there'
+      welcome: 'Welcome to our app!',
+      greeting: 'Hello {name}!',
+      userCount: 'We have {count} users'
     }
   },
   am: {
     translation: {
-      welcome: 'እንኳን ደህና መጡ!',
-      greeting: 'ሰላም'
+      welcome: 'እንኳን ደህና መጡ ወደ መተግበሪያችን!',
+      greeting: 'ሰላም {name}!',
+      userCount: '{count} ተጠቃሚዎች አሉን'
+    }
+  },
+  ti: {
+    translation: {
+      welcome: 'ቅድም ኣብ ሓቅ መጻእኩም ናብ መተግበሪያችን!',
+      greeting: 'ሰላም {name}!',
+      userCount: '{count} ተጠቃሚታት ኣለውን'
     }
   }
 };
 
 function App() {
   return (
+    // 2. Wrap your app with EthioProvider
     <EthioProvider
       resources={translations}
-      defaultLang="en"
-      fallbackLang="en"
+      defaultLang="am"        // Auto-detects user's language
+      fallbackLang="en"       // Fallback if translation missing
     >
-      <MyComponent />
+      <Dashboard />
     </EthioProvider>
   );
 }
 
-function MyComponent() {
-  const { t, currentLang, changeLanguage, supportedLangs } = useEthioIntl();
+function Dashboard() {
+  // 3. Use the hook anywhere in your app
+  const {
+    t,                      // Translation function
+    currentLang,            // Current language code
+    changeLanguage,         // Switch languages
+    supportedLangs,         // Available languages
+    detectLanguage,         // Browser language detection
+    isLanguageSupported     // Check if language exists
+  } = useEthioIntl();
 
   return (
     <div>
+      {/* 4. Use translations with interpolation */}
       <h1>{t('welcome')}</h1>
-      <p>{t('greeting')}</p>
+      <p>{t('greeting', { name: 'John' })}</p>
+      <p>{t('userCount', { count: 1234 })}</p>
+
+      {/* 5. Language switcher */}
+      <select
+        value={currentLang}
+        onChange={(e) => changeLanguage(e.target.value)}
+      >
+        {supportedLangs.map(lang => (
+          <option key={lang} value={lang}>
+            {lang.toUpperCase()}
+          </option>
+        ))}
+      </select>
 
       <p>Current language: {currentLang}</p>
-      <p>Available: {supportedLangs.join(', ')}</p>
-
-      <button onClick={() => changeLanguage('am')}>
-        Switch to Amharic
-      </button>
+      <p>Browser detected: {detectLanguage()}</p>
     </div>
   );
 }
 ```
+
+### 🏗️ Advanced Features
+
+#### Namespaced Translations
+
+```tsx
+const translations = {
+  en: {
+    translation: { welcome: 'Welcome!' },
+    auth: { login: 'Login', logout: 'Logout' },
+    nav: { home: 'Home', profile: 'Profile' }
+  }
+};
+
+function Component() {
+  const { tNamespace } = useEthioIntl();
+
+  return (
+    <div>
+      <h1>{tNamespace('auth', 'login')}</h1>  {/* "Login" */}
+      <nav>{tNamespace('nav', 'home')}</nav>  {/* "Home" */}
+    </div>
+  );
+}
+```
+
+#### Language Detection & Persistence
+
+```tsx
+function LanguageSelector() {
+  const {
+    currentLang,
+    changeLanguage,
+    supportedLangs,
+    detectLanguage,
+    isLanguageSupported
+  } = useEthioIntl();
+
+  const handleAutoDetect = () => {
+    const detected = detectLanguage();
+    if (isLanguageSupported(detected)) {
+      changeLanguage(detected); // Persists to localStorage
+    }
+  };
+
+  return (
+    <div>
+      <button onClick={handleAutoDetect}>
+        Auto-detect language
+      </button>
+      {/* Language persists across sessions */}
+    </div>
+  );
+}
+```
+
+### 📋 Complete API Reference
+
+#### EthioProvider Props
+
+```tsx
+interface EthioProviderProps {
+  resources: Record<string, Record<string, any>>;  // Translation objects
+  defaultLang?: string;                            // Default language (auto-detected)
+  fallbackLang?: string;                           // Fallback for missing translations
+  children: React.ReactNode;                       // Your app components
+}
+```
+
+#### useEthioIntl Hook
+
+```tsx
+interface EthioIntlHookResult {
+  // Core functions
+  t: (key: string, options?: any) => string;           // Translate with interpolation
+  tNamespace: (ns: string, key: string) => string;     // Namespaced translation
+
+  // Language management
+  currentLang: string;                                  // Current language code
+  changeLanguage: (lang: string) => void;              // Switch language (persisted)
+  supportedLangs: string[];                            // Available languages array
+
+  // Utilities
+  detectLanguage: () => string;                        // Browser language detection
+  isLanguageSupported: (lang: string) => boolean;     // Check language availability
+}
+```
+
+### 🌍 Supported Languages
+
+Ethio-Intl works with **any language**! Here are some Ethiopian languages we've tested:
+
+```tsx
+const multiLangResources = {
+  am: { translation: { /* Amharic */ } },
+  ti: { translation: { /* Tigrinya */ } },
+  om: { translation: { /* Afaan Oromoo */ } },
+  so: { translation: { /* Somali */ } },
+  ar: { translation: { /* Arabic */ } },
+  en: { translation: { /* English */ } },
+  fr: { translation: { /* French */ } }
+  // Add unlimited languages!
+};
+```
+
+### 🔧 Best Practices
+
+#### 1. Translation Structure
+```tsx
+const translations = {
+  en: {
+    translation: {
+      // Flat structure for simple apps
+      welcome: 'Welcome!',
+      greeting: 'Hello {name}!'
+    },
+    // Namespaces for complex apps
+    auth: {
+      login: 'Login',
+      register: 'Register'
+    },
+    nav: {
+      home: 'Home',
+      settings: 'Settings'
+    }
+  }
+};
+```
+
+#### 2. Language Detection
+```tsx
+function SmartLanguageInit() {
+  const { detectLanguage, isLanguageSupported, changeLanguage } = useEthioIntl();
+
+  useEffect(() => {
+    const detected = detectLanguage();
+    if (isLanguageSupported(detected)) {
+      changeLanguage(detected);
+    }
+  }, []);
+}
+```
+
+#### 3. Interpolation Patterns
+```tsx
+// Both syntaxes supported:
+t('greeting', { name: 'John' })  // "Hello John!"
+t('count', { num: 42 })          // "You have 42 items"
+
+// Translation keys:
+greeting: 'Hello {name}!'
+count: 'You have {num} items'
+```
+
+### 🎯 What Users Need To Do
+
+#### For Basic Usage:
+1. **Install**: `npm install ethio-intl`
+2. **Import**: `import { EthioProvider, useEthioIntl } from 'ethio-intl'`
+3. **Create translations object** with your languages
+4. **Wrap app** with `<EthioProvider resources={translations}>`
+5. **Use hook** `const { t, changeLanguage } = useEthioIntl()`
+
+#### For Advanced Usage:
+- Add **namespaced translations** for better organization
+- Use **language detection** for better UX
+- Implement **language switchers** with `supportedLangs`
+- Leverage **interpolation** for dynamic content
+
+### 🚀 Zero Dependencies
+
+**No external libraries needed!** Unlike other i18n solutions, Ethio-Intl is built purely with React:
+
+- ❌ No i18next dependency
+- ❌ No react-i18next complexity
+- ❌ No heavy bundle size
+- ✅ Pure React Context + Hooks
+- ✅ TypeScript support
+- ✅ Tree-shakeable
+
+### 📱 Demo & Examples
+
+**Live Demo**: [http://127.0.0.1:5500/demo.html](http://127.0.0.1:5500/demo.html)
+
+See the demo for:
+- Multi-language switching (English, Amharic, Tigrinya, Afaan Oromoo)
+- Namespaced translations
+- Interpolation examples
+- Language persistence
 
 ## 🎨 Styling
 
