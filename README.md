@@ -178,14 +178,202 @@ const ethiopian = toEthiopianDate(new Date());
 // { year: 2017, month: 4, day: 7, monthName: 'Tahsas' }
 ```
 
-## 🌍 Multi-Language Localization
+## 🏢 Enterprise-Scale Multi-Language Localization
 
-**Zero-configuration i18n for Ethiopian applications!** Pure React implementation with no external dependencies.
+**Production-ready i18n solution for large Ethiopian applications!** Built for enterprise with dynamic loading, namespaces, and development tools.
 
 ### 🚀 Quick Start
 
 ```bash
 npm install ethio-intl
+```
+
+### 📁 Project Structure for Large Apps
+
+For enterprise applications, organize your translations like this:
+
+```
+src/
+├── locales/
+│   ├── en/
+│   │   ├── common.json      # Shared translations
+│   │   ├── dashboard.json   # Page-specific
+│   │   ├── users.json       # Feature-specific
+│   │   └── products.json    # Module-specific
+│   ├── am/
+│   │   ├── common.json
+│   │   ├── dashboard.json
+│   │   └── ...
+│   └── index.json           # Language metadata
+├── components/
+├── pages/
+└── App.tsx
+```
+
+### 📄 Translation File Examples
+
+**src/locales/en/common.json:**
+```json
+{
+  "welcome": "Welcome",
+  "loading": "Loading...",
+  "save": "Save",
+  "cancel": "Cancel",
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "users": "Users"
+  }
+}
+```
+
+**src/locales/am/dashboard.json:**
+```json
+{
+  "title": "ዳሽቦርድ",
+  "stats": {
+    "users": "ተጠቃሚዎች",
+    "revenue": "ገቢ"
+  }
+}
+```
+
+### 🏭 Enterprise Usage Patterns
+
+#### Dynamic Translation Loading
+```tsx
+// App.tsx - Initial setup with minimal translations
+import { EthioProvider, useEthioIntl } from 'ethio-intl';
+
+const initialTranslations = {
+  en: { translation: { common: { loading: "Loading...", nav: { home: "Home" } } } },
+  am: { translation: { common: { loading: "በመስቀል ላይ...", nav: { home: "ቤት" } } } }
+};
+
+function App() {
+  return (
+    <EthioProvider resources={initialTranslations}>
+      <AppRouter />
+    </EthioProvider>
+  );
+}
+
+// DashboardPage.tsx - Load page-specific translations
+import { useEffect } from 'react';
+import { useEthioIntl } from 'ethio-intl';
+
+function DashboardPage() {
+  const { loadNamespace, unloadNamespace, tNamespace } = useEthioIntl();
+
+  useEffect(() => {
+    // Load dashboard translations dynamically
+    loadNamespace('en', 'dashboard', {
+      title: 'Dashboard',
+      stats: { users: 'Total Users', revenue: 'Revenue' }
+    });
+    loadNamespace('am', 'dashboard', {
+      title: 'ዳሽቦርድ',
+      stats: { users: 'ጠቅላላ ተጠቃሚዎች', revenue: 'ገቢ' }
+    });
+
+    // Cleanup on unmount
+    return () => {
+      unloadNamespace('en', 'dashboard');
+      unloadNamespace('am', 'dashboard');
+    };
+  }, [loadNamespace, unloadNamespace]);
+
+  return (
+    <div>
+      <h1>{tNamespace('dashboard', 'title')}</h1>
+      <p>{tNamespace('dashboard', 'stats.users')}: 1,234</p>
+    </div>
+  );
+}
+```
+
+#### Lazy Loading with Translations
+```tsx
+// Lazy load pages with their translations
+const LazyUsersPage = lazy(() => {
+  return import('./pages/UsersPage').then(async (module) => {
+    // Preload page translations before rendering
+    const usersEn = await import('../locales/en/users.json');
+    const usersAm = await import('../locales/am/users.json');
+
+    // Note: In real usage, you'd use the hook here
+    // This is a conceptual example
+
+    return module;
+  });
+});
+
+// In a component with access to hook:
+function PageLoader({ page }: { page: string }) {
+  const { loadNamespace, preloadLanguages } = useEthioIntl();
+
+  useEffect(() => {
+    const loadPageTranslations = async () => {
+      await preloadLanguages(['en', 'am']); // Load common translations
+
+      // Load page-specific translations
+      const [enTranslations, amTranslations] = await Promise.all([
+        import(`../locales/en/${page}.json`),
+        import(`../locales/am/${page}.json`)
+      ]);
+
+      loadNamespace('en', page, enTranslations.default);
+      loadNamespace('am', page, amTranslations.default);
+    };
+
+    loadPageTranslations();
+  }, [page, loadNamespace, preloadLanguages]);
+
+  return <div>Loading page...</div>;
+}
+```
+
+#### Development Tools Integration
+```tsx
+function DevTools() {
+  const {
+    getMissingKeys,
+    exportTranslations,
+    enableHotReload,
+    isDevelopment,
+    currentLang
+  } = useEthioIntl();
+
+  useEffect(() => {
+    if (isDevelopment) {
+      // Enable hot reload for development
+      enableHotReload((lang, translations) => {
+        console.log(`🔄 Hot reloaded ${lang} translations`, translations);
+      });
+    }
+  }, [isDevelopment, enableHotReload]);
+
+  const checkMissing = () => {
+    const missing = getMissingKeys();
+    console.log('Missing translation keys:', missing);
+  };
+
+  const exportLang = () => {
+    const translations = exportTranslations(currentLang);
+    // Download or save translations
+    console.log('Exported translations:', translations);
+  };
+
+  if (!isDevelopment) return null;
+
+  return (
+    <div style={{ position: 'fixed', bottom: 10, right: 10, background: '#333', color: '#fff', padding: 10 }}>
+      <h4>🛠️ Dev Tools</h4>
+      <button onClick={checkMissing}>Check Missing Keys</button>
+      <button onClick={exportLang}>Export {currentLang.toUpperCase()}</button>
+    </div>
+  );
+}
 ```
 
 ```tsx
@@ -368,6 +556,160 @@ const multiLangResources = {
   en: { translation: { /* English */ } },
   fr: { translation: { /* French */ } }
   // Add unlimited languages!
+};
+```
+
+### 🔧 Enterprise Setup Guide
+
+#### 1. Translation File Organization
+```
+src/
+├── locales/
+│   ├── en/
+│   │   ├── common.json      # App-wide shared translations
+│   │   ├── auth.json        # Authentication module
+│   │   ├── dashboard.json   # Dashboard page
+│   │   ├── users.json       # Users management
+│   │   └── products.json    # Products catalog
+│   ├── am/
+│   │   ├── common.json
+│   │   ├── auth.json
+│   │   ├── dashboard.json
+│   │   ├── users.json
+│   │   └── products.json
+│   └── index.ts             # Language loader utilities
+```
+
+#### 2. Language Index File (src/locales/index.ts)
+```typescript
+// Utility functions for loading translations
+export const loadLanguageTranslations = async (lang: string): Promise<Record<string, any>> => {
+  const [common, auth, dashboard, users, products] = await Promise.all([
+    import(`./${lang}/common.json`),
+    import(`./${lang}/auth.json`),
+    import(`./${lang}/dashboard.json`),
+    import(`./${lang}/users.json`),
+    import(`./${lang}/products.json`)
+  ]);
+
+  return {
+    translation: common.default,
+    auth: auth.default,
+    dashboard: dashboard.default,
+    users: users.default,
+    products: products.default
+  };
+};
+
+export const preloadCriticalTranslations = async (): Promise<Record<string, any>> => {
+  // Load only essential translations initially
+  const [enCommon, amCommon] = await Promise.all([
+    import('./en/common.json'),
+    import('./am/common.json')
+  ]);
+
+  return {
+    en: { translation: enCommon.default },
+    am: { translation: amCommon.default }
+  };
+};
+```
+
+#### 3. App Setup with Dynamic Loading
+```tsx
+// App.tsx
+import React, { Suspense } from 'react';
+import { EthioProvider, useEthioIntl } from 'ethio-intl';
+import { preloadCriticalTranslations } from './locales';
+
+function App() {
+  const [initialTranslations, setInitialTranslations] = React.useState<Record<string, any> | null>(null);
+
+  React.useEffect(() => {
+    // Load critical translations on app start
+    preloadCriticalTranslations().then(setInitialTranslations);
+  }, []);
+
+  if (!initialTranslations) {
+    return <div>Loading translations...</div>;
+  }
+
+  return (
+    <EthioProvider resources={initialTranslations}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <AppRouter />
+      </Suspense>
+    </EthioProvider>
+  );
+}
+
+// Page Component with Translation Loading
+function DashboardPage() {
+  const { loadNamespace, tNamespace } = useEthioIntl();
+
+  React.useEffect(() => {
+    // Load dashboard translations when page mounts
+    const loadTranslations = async () => {
+      const [enDashboard, amDashboard] = await Promise.all([
+        import('../locales/en/dashboard.json'),
+        import('../locales/am/dashboard.json')
+      ]);
+
+      loadNamespace('en', 'dashboard', enDashboard.default);
+      loadNamespace('am', 'dashboard', amDashboard.default);
+    };
+
+    loadTranslations();
+  }, [loadNamespace]);
+
+  return (
+    <div>
+      <h1>{tNamespace('dashboard', 'title')}</h1>
+      {/* Page content */}
+    </div>
+  );
+}
+```
+
+#### 4. Build Configuration for Translation Bundling
+
+**vite.config.js (for Vite):**
+```javascript
+import { defineConfig } from 'vite';
+import { resolve } from 'path';
+
+export default defineConfig({
+  build: {
+    rollupOptions: {
+      // Pre-bundle translation chunks
+      manualChunks: {
+        'translations-en': ['./src/locales/en/index.ts'],
+        'translations-am': ['./src/locales/am/index.ts']
+      }
+    }
+  },
+  // Lazy load translations
+  optimizeDeps: {
+    include: ['ethio-intl']
+  }
+});
+```
+
+**webpack.config.js (for Webpack):**
+```javascript
+module.exports = {
+  // Code splitting for translations
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        translations: {
+          test: /[\\/]locales[\\/]/,
+          name: 'translations',
+          chunks: 'all'
+        }
+      }
+    }
+  }
 };
 ```
 

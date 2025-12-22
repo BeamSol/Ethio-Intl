@@ -1,0 +1,70 @@
+{
+  "translation": {
+    "common": {
+      "welcome": "እንኳን ደህና መጡ",
+      "loading": "በመስቀል ላይ...",
+      "error": "ስህተት ተለለየበት",
+      "save": "ላክ",
+      "cancel": "ያቁሙ",
+      "delete": "ሰርዝ",
+      "edit": "አርትዕ",
+      "search": "ፈልግ",
+      "filter": "አጣራ",
+      "sort": "ያስያዙ",
+      "next": "ቀጣይ",
+      "previous": "ቀድሞ",
+      "page": "ገጽ {current} ከ {total}",
+      "items": "{count} ንጥሎች"
+    },
+    "nav": {
+      "home": "ቤት",
+      "dashboard": "ዳሽቦርድ",
+      "profile": "መገለጫ",
+      "settings": "ቅንብሮች",
+      "logout": "ውጣ"
+    },
+    "auth": {
+      "login": "ግባ",
+      "register": "ይመዝገቡ",
+      "forgotPassword": "በተለወጠ መክፈቻ ቃል ረሳን?",
+      "resetPassword": "መክፈቻ ቃል ያስያዙ",
+      "email": "ኢሜይል",
+      "password": "መክፈቻ ቃል",
+      "confirmPassword": "መክፈቻ ቃል ያረጋግጡ",
+      "rememberMe": "አስታወስኝ"
+    }
+  },
+  "dashboard": {
+    "title": "ዳሽቦርድ",
+    "welcome": "እንኳን ደህና መጡ፣ {name}!",
+    "stats": {
+      "users": "ጠቅላላ ተጠቃሚዎች",
+      "revenue": "ገቢ",
+      "orders": "ትዕዛዞች",
+      "growth": "መስፋፋት"
+    }
+  },
+  "products": {
+    "title": "ምርቶች",
+    "addProduct": "ምርት ያክሉ",
+    "editProduct": "ምርት ያርትዑ",
+    "deleteProduct": "ምርት ያስያዙ",
+    "name": "ምርት ስም",
+    "price": "ዋጋ",
+    "category": "ምድብ",
+    "description": "መግለጫ",
+    "stock": "ክምችት",
+    "status": "ሁኔታ"
+  },
+  "users": {
+    "title": "ተጠቃሚዎች",
+    "addUser": "ተጠቃሚ ያክሉ",
+    "editUser": "ተጠቃሚ ያርትዑ",
+    "deleteUser": "ተጠቃሚ ያስያዙ",
+    "name": "ስም",
+    "email": "ኢሜይል",
+    "role": "ሚና",
+    "status": "ሁኔታ",
+    "lastLogin": "የመጨረሻ መለጠፍ"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "translation": {
+    "common": {
+      "welcome": "Welcome",
+      "loading": "Loading...",
+      "error": "An error occurred",
+      "save": "Save",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "edit": "Edit",
+      "search": "Search",
+      "filter": "Filter",
+      "sort": "Sort",
+      "next": "Next",
+      "previous": "Previous",
+      "page": "Page {current} of {total}",
+      "items": "{count} items"
+    },
+    "nav": {
+      "home": "Home",
+      "dashboard": "Dashboard",
+      "profile": "Profile",
+      "settings": "Settings",
+      "logout": "Logout"
+    },
+    "auth": {
+      "login": "Login",
+      "register": "Register",
+      "forgotPassword": "Forgot Password?",
+      "resetPassword": "Reset Password",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "rememberMe": "Remember me"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back, {name}!",
+    "stats": {
+      "users": "Total Users",
+      "revenue": "Revenue",
+      "orders": "Orders",
+      "growth": "Growth"
+    }
+  },
+  "products": {
+    "title": "Products",
+    "addProduct": "Add Product",
+    "editProduct": "Edit Product",
+    "deleteProduct": "Delete Product",
+    "name": "Product Name",
+    "price": "Price",
+    "category": "Category",
+    "description": "Description",
+    "stock": "Stock",
+    "status": "Status"
+  },
+  "users": {
+    "title": "Users",
+    "addUser": "Add User",
+    "editUser": "Edit User",
+    "deleteUser": "Delete User",
+    "name": "Name",
+    "email": "Email",
+    "role": "Role",
+    "status": "Status",
+    "lastLogin": "Last Login"
+  }
+}

@@ -1,16 +1,31 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { EthioProviderProps, EthioIntlHookResult } from './types';
 
-// Enhanced context for multi-language i18n
+// Enterprise-scale i18n context
 interface EthioIntlContextType {
+  // Core translation functions
   resources: Record<string, Record<string, any>>;
   currentLang: string;
   changeLanguage: (lang: string) => void;
   t: (key: string, options?: any) => string;
   tNamespace: (namespace: string, key: string, options?: any) => string;
+
+  // Language management
   supportedLangs: string[];
   detectLanguage: () => string;
-  isLanguageSupported: (lang: string) => boolean;
+  isLanguageSupported: (lang: string, resources?: Record<string, any>) => boolean;
+
+  // Enterprise features for large projects
+  loadTranslations: (lang: string, translations: Record<string, any>) => void;
+  loadNamespace: (lang: string, namespace: string, translations: Record<string, any>) => void;
+  unloadNamespace: (lang: string, namespace: string) => void;
+  preloadLanguages: (langs: string[]) => Promise<void>;
+  getMissingKeys: (lang?: string) => string[];
+  exportTranslations: (lang: string) => Record<string, any>;
+
+  // Development helpers
+  isDevelopment: boolean;
+  enableHotReload: (callback: (lang: string, translations: Record<string, any>) => void) => void;
 }
 
 export const EthioIntlContext = createContext<EthioIntlContextType | null>(null);
@@ -43,16 +58,18 @@ const storeLanguage = (lang: string): void => {
  * Pure React implementation with zero external dependencies
  */
 export const EthioProvider: React.FC<EthioProviderProps> = ({
-  resources,
+  resources: initialResources,
   defaultLang = 'am',
   fallbackLang = 'en',
   children,
 }) => {
-  // Initialize language with detection logic
+  // State for dynamic resource management
+  const [resources, setResources] = useState<Record<string, Record<string, any>>>(initialResources);
   const [currentLang, setCurrentLang] = useState(() => {
     // Priority: stored > detected > default
     return getStoredLanguage() || getBrowserLanguage() || defaultLang;
   });
+  const [hotReloadCallback, setHotReloadCallback] = useState<((lang: string, translations: Record<string, any>) => void) | null>(null);
 
   // Store language changes
   const changeLanguage = (lang: string) => {
@@ -117,6 +134,92 @@ export const EthioProvider: React.FC<EthioProviderProps> = ({
     return langsToCheck.includes(lang);
   };
 
+  // Environment detection
+  const isDevelopment = process.env.NODE_ENV === 'development';
+
+  // Enterprise features for large projects
+
+  // Dynamic translation loading
+  const loadTranslations = useCallback((lang: string, translations: Record<string, any>) => {
+    setResources(prev => ({
+      ...prev,
+      [lang]: {
+        ...prev[lang],
+        ...translations
+      }
+    }));
+  }, []);
+
+  // Namespace-based loading
+  const loadNamespace = useCallback((lang: string, namespace: string, translations: Record<string, any>) => {
+    setResources(prev => ({
+      ...prev,
+      [lang]: {
+        ...prev[lang],
+        [namespace]: {
+          ...prev[lang]?.[namespace],
+          ...translations
+        }
+      }
+    }));
+  }, []);
+
+  // Unload namespace (for memory management)
+  const unloadNamespace = useCallback((lang: string, namespace: string) => {
+    setResources(prev => {
+      const langResources = { ...prev[lang] };
+      delete langResources[namespace];
+      return {
+        ...prev,
+        [lang]: langResources
+      };
+    });
+  }, []);
+
+  // Preload multiple languages
+  const preloadLanguages = useCallback(async (langs: string[]): Promise<void> => {
+    const loadPromises = langs.map(async (lang) => {
+      try {
+        // Dynamic import pattern for large projects
+        const module = await import(`../locales/${lang}.json`);
+        loadTranslations(lang, module.default || module);
+      } catch (error) {
+        console.warn(`Failed to load translations for ${lang}:`, error);
+      }
+    });
+
+    await Promise.all(loadPromises);
+  }, [loadTranslations]);
+
+  // Get missing translation keys
+  const getMissingKeys = useCallback((lang: string = currentLang): string[] => {
+    const fallbackKeys = Object.keys(resources[fallbackLang]?.translation || {});
+    const currentKeys = Object.keys(resources[lang]?.translation || {});
+
+    return fallbackKeys.filter(key => !currentKeys.includes(key));
+  }, [resources, fallbackLang, currentLang]);
+
+  // Export translations for development/tools
+  const exportTranslations = useCallback((lang: string): Record<string, any> => {
+    return resources[lang] || {};
+  }, [resources]);
+
+  // Hot reload support for development
+  const enableHotReload = useCallback((callback: (lang: string, translations: Record<string, any>) => void) => {
+    if (isDevelopment) {
+      setHotReloadCallback(() => callback);
+
+      // Listen for hot reload events (if using webpack/vite)
+      if (typeof window !== 'undefined' && (window as any).addEventListener) {
+        (window as any).addEventListener('ethio-intl:hot-reload', (event: CustomEvent) => {
+          const { lang, translations } = event.detail;
+          loadTranslations(lang, translations);
+          callback(lang, translations);
+        });
+      }
+    }
+  }, [isDevelopment, loadTranslations]);
+
   // Auto-detect language on mount if not stored
   useEffect(() => {
     if (!getStoredLanguage()) {
@@ -136,6 +239,14 @@ export const EthioProvider: React.FC<EthioProviderProps> = ({
     supportedLangs,
     detectLanguage,
     isLanguageSupported,
+    loadTranslations,
+    loadNamespace,
+    unloadNamespace,
+    preloadLanguages,
+    getMissingKeys,
+    exportTranslations,
+    isDevelopment,
+    enableHotReload,
   };
 
   return (
