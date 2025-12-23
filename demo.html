@@ -197,6 +197,7 @@
     <nav class="nav">
         <button class="nav-btn active" onclick="showTab('transliteration')">Transliteration</button>
         <button class="nav-btn" onclick="showTab('localization')">Localization (i18n)</button>
+        <button class="nav-btn" onclick="showTab('dashboard')">Dashboard Demo</button>
     </nav>
 
     <!-- Transliteration Section -->
@@ -311,10 +312,125 @@ function Dashboard() {
   );
 }</code></div>
 
-        <div class="info-box">
-            <strong>🚀 Enterprise Ready:</strong> Dynamic loading, namespace support, hot reload, and development tools built-in! Perfect for large projects with separate translation files.
+            <div class="info-box">
+                <strong>🚀 Enterprise Ready:</strong> Dynamic loading, namespace support, hot reload, and development tools built-in! Perfect for large projects with separate translation files.
+            </div>
         </div>
-    </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard-tab" class="tab-content hidden">
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>🏗️ Dynamic Loading</h3>
+                    <p>Load page-specific translations on-demand for better performance</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📦 Namespaces</h3>
+                    <p>Organize translations by modules/pages with clean separation</p>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h2>📊 Enterprise Dashboard Demo</h2>
+                <p>This demonstrates how large applications load translations dynamically:</p>
+
+                <div class="lang-buttons">
+                    <button class="lang-btn active" onclick="loadDashboard('en')">🇺🇸 English Dashboard</button>
+                    <button class="lang-btn" onclick="loadDashboard('am')">🇪🇹 አማርኛ ዳሽቦርድ</button>
+                </div>
+
+                <div id="dashboard-content" style="display: none;">
+                    <div class="translation-box">
+                        <h3 id="dashboard-title">Dashboard</h3>
+                        <p id="dashboard-welcome">Welcome back, User!</p>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 20px 0;">
+                        <div class="translation-box">
+                            <h4 id="stats-users">Total Users</h4>
+                            <div style="font-size: 24px; font-weight: bold; color: #007bff;">1,234</div>
+                        </div>
+                        <div class="translation-box">
+                            <h4 id="stats-revenue">Revenue</h4>
+                            <div style="font-size: 24px; font-weight: bold; color: #28a745;">$45,678</div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 15px; margin: 20px 0;">
+                        <button class="btn" id="action-details">View Details</button>
+                        <button class="btn secondary" id="action-export">Export Data</button>
+                        <button class="btn secondary" id="action-refresh">Refresh</button>
+                    </div>
+                </div>
+
+                <div id="loading-message" class="info-box">
+                    <strong>🔄 Click a button above</strong> to dynamically load dashboard translations and see the enterprise features in action!
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h2>💻 Enterprise Code Pattern</h2>
+                <div class="code-example">
+// DashboardPage.tsx - Dynamic namespace loading
+import { useEffect } from 'react';
+import { useEthioIntl } from 'ethio-intl';
+
+function DashboardPage() {
+  const { loadNamespace, unloadNamespace, tNamespace } = useEthioIntl();
+
+  useEffect(() => {
+    // Load dashboard translations when component mounts
+    const loadTranslations = async () => {
+      const [enDashboard, amDashboard] = await Promise.all([
+        import('../locales/en/dashboard.json'),
+        import('../locales/am/dashboard.json')
+      ]);
+
+      loadNamespace('en', 'dashboard', enDashboard.default);
+      loadNamespace('am', 'dashboard', amDashboard.default);
+    };
+
+    loadTranslations();
+
+    // Cleanup when component unmounts
+    return () => {
+      unloadNamespace('en', 'dashboard');
+      unloadNamespace('am', 'dashboard');
+    };
+  }, [loadNamespace, unloadNamespace]);
+
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;{tNamespace('dashboard', 'title')}&lt;/h1&gt;
+      &lt;p&gt;{tNamespace('dashboard', 'stats.users')}: 1,234&lt;/p&gt;
+      &lt;button&gt;{tNamespace('dashboard', 'actions.viewDetails')}&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+// App.tsx - Preload critical translations
+function App() {
+  const [translations, setTranslations] = useState(null);
+
+  useEffect(() => {
+    // Load only essential translations initially
+    preloadCriticalTranslations().then(setTranslations);
+  }, []);
+
+  if (!translations) return &lt;div&gt;Loading...&lt;/div&gt;;
+
+  return (
+    &lt;EthioProvider resources={translations}&gt;
+      &lt;DashboardPage /&gt;
+    &lt;/EthioProvider&gt;
+  );
+}</code></div>
+            </div>
+
+            <div class="info-box">
+                <strong>🏢 Enterprise Pattern:</strong> Load common translations initially, then dynamically load page-specific translations. Unload when not needed to manage memory.
+            </div>
+        </div>
 
             <div class="demo-section">
                 <h2>🎯 Smart Transliteration Input</h2>
@@ -443,6 +559,70 @@ function Dashboard() {
 
             // Add active class to clicked button
             event.target.classList.add('active');
+        }
+
+        // Dashboard demonstration functionality
+        const dashboardTranslations = {
+            en: {
+                title: 'Dashboard',
+                welcome: 'Welcome back, Administrator!',
+                stats: {
+                    users: 'Total Users',
+                    revenue: 'Revenue'
+                },
+                actions: {
+                    viewDetails: 'View Details',
+                    exportData: 'Export Data',
+                    refresh: 'Refresh'
+                }
+            },
+            am: {
+                title: 'ዳሽቦርድ',
+                welcome: 'እንኳን ደህና መጡ፣ አስተያየት!',
+                stats: {
+                    users: 'ጠቅላላ ተጠቃሚዎች',
+                    revenue: 'ገቢ'
+                },
+                actions: {
+                    viewDetails: 'ዝርዝሮች ይመልክ',
+                    exportData: 'ውሂብ ወደ ውጪ ላክ',
+                    refresh: 'አድስ'
+                }
+            }
+        };
+
+        function loadDashboard(lang) {
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Show loading state
+            const loadingMsg = document.getElementById('loading-message');
+            const dashboardContent = document.getElementById('dashboard-content');
+
+            loadingMsg.style.display = 'block';
+            dashboardContent.style.display = 'none';
+
+            // Simulate loading delay (like real dynamic import)
+            setTimeout(() => {
+                loadingMsg.style.display = 'none';
+                dashboardContent.style.display = 'block';
+
+                // Load translations (simulating namespace loading)
+                const translations = dashboardTranslations[lang];
+
+                document.getElementById('dashboard-title').textContent = translations.title;
+                document.getElementById('dashboard-welcome').textContent = translations.welcome;
+                document.getElementById('stats-users').textContent = translations.stats.users;
+                document.getElementById('stats-revenue').textContent = translations.stats.revenue;
+                document.getElementById('action-details').textContent = translations.actions.viewDetails;
+                document.getElementById('action-export').textContent = translations.actions.exportData;
+                document.getElementById('action-refresh').textContent = translations.actions.refresh;
+
+                console.log(`✅ Loaded ${lang} dashboard translations dynamically`);
+            }, 800);
         }
 
         // Enhanced multi-language functionality (simulating our provider)

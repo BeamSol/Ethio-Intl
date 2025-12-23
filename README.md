@@ -178,9 +178,38 @@ const ethiopian = toEthiopianDate(new Date());
 // { year: 2017, month: 4, day: 7, monthName: 'Tahsas' }
 ```
 
-## 🏢 Enterprise-Scale Multi-Language Localization
+# 🌍 Ethio-Intl
 
-**Production-ready i18n solution for large Ethiopian applications!** Built for enterprise with dynamic loading, namespaces, and development tools.
+**Complete Ethiopian web development toolkit** - Amharic transliteration, multi-language i18n, and Ethiopian utilities in one lightweight package.
+
+[![npm version](https://badge.fury.io/js/ethio-intl.svg)](https://badge.fury.io/js/ethio-intl)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+
+## 📋 Table of Contents
+
+- [✨ Features](#-features)
+- [🚀 Quick Start](#-quick-start)
+- [📦 Installation](#-installation)
+- [🔤 Transliteration](#-transliteration)
+- [🌐 Internationalization](#-internationalization)
+- [🛠️ Advanced Usage](#-advanced-usage)
+- [📚 API Reference](#-api-reference)
+- [🎯 Examples](#-examples)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+
+## ✨ Features
+
+- **🔄 Real-time Amharic Transliteration** - Type English, get Amharic instantly
+- **🌍 Multi-language i18n** - Unlimited languages with enterprise features
+- **⚡ Zero Dependencies** - Pure React implementation
+- **📱 Mobile Optimized** - Touch-friendly and responsive
+- **🎯 Smart ä-Forms** - Intelligent vowel handling
+- **🏗️ Enterprise Ready** - Dynamic loading, namespaces, dev tools
+- **📅 Ethiopian Calendar** - Date conversion utilities
+- **🔢 Ethiopian Numerals** - Number formatting
+- **🔧 TypeScript Support** - Full type safety
 
 ### 🚀 Quick Start
 

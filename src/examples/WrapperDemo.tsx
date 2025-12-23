@@ -1,77 +1,89 @@
-import React from 'react';
-import { EthioProvider, useEthioIntl } from '../localization';
+/**
+ * Basic Usage Example - Simple Ethio-Intl Implementation
+ *
+ * This example shows the basic usage pattern for most applications.
+ */
 
-// Define simple dummy translation objects
-const translationResources = {
+import React from 'react';
+import { EthioProvider, useEthioIntl } from '../index';
+
+// Basic translations for a simple app
+const translations = {
   en: {
     translation: {
-      welcome: 'Welcome to Ethio-Intl!',
-      description: 'This demo shows our simplified localization wrapper.',
-      button: 'Switch to Amharic',
-      current: 'Current Language',
-    },
+      welcome: 'Welcome to our app!',
+      greeting: 'Hello {name}!',
+      login: 'Login',
+      logout: 'Logout'
+    }
   },
   am: {
     translation: {
-      welcome: 'እንኳን ደህና መጡ ወደ ኢትዮ-ኢንትል!',
-      description: 'ይህ ዲሞ ቀላል የሆነውን የአካባቢ መጠቅለያ መጠቅለያ ያሳያል።',
-      button: 'ወደ እንግሊዝኛ ቀይር',
-      current: 'አሁን ያለ ቋንቋ',
-    },
-  },
+      welcome: 'እንኳን ደህና መጡ ወደ መተግበሪያችን!',
+      greeting: 'ሰላም {name}!',
+      login: 'ግባ',
+      logout: 'ውጣ'
+    }
+  }
 };
 
-// Component that uses the hook
-const DemoContent: React.FC = () => {
-  const { t, currentLang, changeLanguage, supportedLangs } = useEthioIntl();
+function App() {
+  return (
+    <EthioProvider resources={translations}>
+      <MainApp />
+    </EthioProvider>
+  );
+}
 
-  const toggleLanguage = () => {
-    const nextLang = currentLang === 'en' ? 'am' : 'en';
-    changeLanguage(nextLang);
-  };
+function MainApp() {
+  const { t, currentLang, changeLanguage, supportedLangs } = useEthioIntl();
 
   return (
     <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
       <h1>{t('welcome')}</h1>
-      <p>{t('description')}</p>
+      <p>{t('greeting', { name: 'Developer' })}</p>
 
+      {/* Language Switcher */}
       <div style={{ margin: '20px 0' }}>
-        <strong>{t('current')}:</strong> {currentLang.toUpperCase()}
+        <label>Choose Language: </label>
+        <select
+          value={currentLang}
+          onChange={(e) => changeLanguage(e.target.value)}
+          style={{ padding: '8px', marginLeft: '10px' }}
+        >
+          {supportedLangs.map(lang => (
+            <option key={lang} value={lang}>
+              {lang.toUpperCase()}
+            </option>
+          ))}
+        </select>
       </div>
 
-      <div style={{ margin: '20px 0' }}>
-        <strong>Supported Languages:</strong> {supportedLangs.join(', ')}
-      </div>
-
-      <button
-        onClick={toggleLanguage}
-        style={{
+      {/* Action Buttons */}
+      <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+        <button style={{
           padding: '10px 20px',
           background: '#007bff',
           color: 'white',
           border: 'none',
-          borderRadius: '5px',
-          cursor: 'pointer',
-          fontSize: '16px',
-        }}
-      >
-        {t('button')}
-      </button>
+          borderRadius: '4px',
+          cursor: 'pointer'
+        }}>
+          {t('login')}
+        </button>
+        <button style={{
+          padding: '10px 20px',
+          background: '#6c757d',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer'
+        }}>
+          {t('logout')}
+        </button>
+      </div>
     </div>
   );
-};
+}
 
-// Main demo component that wraps everything
-const WrapperDemo: React.FC = () => {
-  return (
-    <EthioProvider
-      resources={translationResources}
-      defaultLang="en"
-      fallbackLang="en"
-    >
-      <DemoContent />
-    </EthioProvider>
-  );
-};
-
-export default WrapperDemo;
+export default App;
