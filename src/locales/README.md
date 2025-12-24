@@ -56,3 +56,5 @@ return <p>{tNamespace('auth', 'login')}</p>;
 - Use namespaces for feature-specific translations
 - Support both singular and plural forms when needed
 - Include placeholders for dynamic content: `"Hello {name}!"`
+
+
