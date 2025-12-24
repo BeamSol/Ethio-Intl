@@ -540,7 +540,7 @@ function MyComponent() {
 
                     <div class="input-group">
                         <label class="input-label">Ethiopian date:</label>
-                        <div class="demo-output" id="ethiopian-date">ታህሳስ 13, 2019</div>
+                        <div class="demo-output" id="ethiopian-date">Loading...</div>
                     </div>
 
                     <h3>🔢 Geez Numerals</h3>
@@ -551,7 +551,7 @@ function MyComponent() {
 
                     <div class="input-group">
                         <label class="input-label">Geez numeral:</label>
-                        <div class="demo-output" id="geez-number">፳፻፳፭</div>
+                        <div class="demo-output" id="geez-number">Loading...</div>
                     </div>
 
                     <div class="button-group">
@@ -676,7 +676,7 @@ function EthiopianDateDisplay() {
             });
         });
 
-        // Ethiopian Calendar and Geez Numeral utilities (simplified for demo)
+        // Ethiopian Calendar and Geez Numeral utilities (matching library implementation)
         const AMHARIC_MONTHS = {
             en: ["Meskerem", "Tikimt", "Hidar", "Tahsas", "Tir", "Yekatit", "Megabit", "Miazia", "Genbot", "Sene", "Hamle", "Nehase", "Pagume"],
             am: ["መስከረም", "ጥቅምት", "ህዳር", "ታህሳስ", "ጥር", "የካቲት", "መጋቢት", "ሚያዝያ", "ጀንቦት", "ሰኔ", "ሐምሌ", "ነሐሴ", "ጳጉሜ"]
@@ -689,26 +689,78 @@ function EthiopianDateDisplay() {
             tenThousands: '፼'
         };
 
-        // Ethiopian date conversion for demo
-        function toEthDateDemo(date, lang = 'en') {
-            const gregorianYear = date.getFullYear();
-            const gregorianMonth = date.getMonth() + 1;
-            const gregorianDay = date.getDate();
+        // Gregorian leap year check
+        function isGregorianLeapYear(year) {
+            return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+        }
 
-            let ethiopianYear = gregorianYear - 7;
-            if (gregorianMonth < 9 || (gregorianMonth === 9 && gregorianDay < 11)) {
-                ethiopianYear -= 1;
+        // Ethiopian leap year check
+        function isEthiopianLeapYear(ethiopianYear) {
+            return ethiopianYear % 4 === 3;
+        }
+
+        // Get Ethiopian New Year (Meskerem 1) date
+        function getEthiopianNewYear(gregorianYear) {
+            // Create date at noon UTC to avoid timezone issues
+            const day = isGregorianLeapYear(gregorianYear) ? 12 : 11;
+            return new Date(Date.UTC(gregorianYear, 8, day, 12, 0, 0, 0)); // September 11 or 12 at noon UTC
+        }
+
+        // Get Ethiopian year for a Gregorian date
+        function getEthiopianYear(gregorianDate) {
+            const gregorianYear = gregorianDate.getFullYear();
+            const newYearDate = getEthiopianNewYear(gregorianYear);
+            // Normalize both dates to noon UTC for accurate comparison
+            const normalizedDate = new Date(Date.UTC(gregorianDate.getFullYear(), gregorianDate.getMonth(), gregorianDate.getDate(), 12, 0, 0, 0));
+            if (normalizedDate < newYearDate) {
+                return gregorianYear - 8;
+            } else {
+                return gregorianYear - 7;
+            }
+        }
+
+        // Precise Ethiopian date conversion (matching library)
+        function toEthDateDemo(inputDate, lang = 'en') {
+            // Normalize input date to noon UTC to avoid timezone issues
+            const date = new Date(Date.UTC(
+                inputDate.getFullYear(),
+                inputDate.getMonth(),
+                inputDate.getDate(),
+                12, 0, 0, 0
+            ));
+
+            const gregorianYear = date.getUTCFullYear();
+            let ethiopianYear = getEthiopianYear(inputDate); // Use original date for year calculation
+            let newYearDate = getEthiopianNewYear(gregorianYear);
+
+            // If original date is before Meskerem 1, use the previous year's Meskerem 1
+            const normalizedInputDate = new Date(Date.UTC(inputDate.getFullYear(), inputDate.getMonth(), inputDate.getDate(), 12, 0, 0, 0));
+            if (normalizedInputDate < newYearDate) {
+                ethiopianYear = getEthiopianYear(inputDate);
+                newYearDate = getEthiopianNewYear(gregorianYear - 1);
             }
 
-            let ethiopianMonth = gregorianMonth;
-            let ethiopianDay = gregorianDay;
+            let daysDiff = Math.floor((date.getTime() - newYearDate.getTime()) / (1000 * 60 * 60 * 24));
 
-            if (ethiopianMonth > 13) {
-                ethiopianMonth = 1;
-                ethiopianYear += 1;
+            let ethiopianMonth, ethiopianDay;
+
+            if (daysDiff < 360) {
+                ethiopianMonth = Math.floor(daysDiff / 30) + 1;
+                ethiopianDay = (daysDiff % 30) + 1;
+            } else {
+                const pagumeDays = daysDiff - 360;
+                const isLeapYear = isEthiopianLeapYear(ethiopianYear);
+
+                if (pagumeDays < (isLeapYear ? 6 : 5)) {
+                    ethiopianMonth = 13;
+                    ethiopianDay = pagumeDays + 1;
+                } else {
+                    ethiopianMonth = 1;
+                    ethiopianDay = pagumeDays - (isLeapYear ? 6 : 5) + 1;
+                }
             }
 
-            const monthName = AMHARIC_MONTHS[lang][ethiopianMonth - 1] || AMHARIC_MONTHS[lang][0];
+            const monthName = AMHARIC_MONTHS[lang][ethiopianMonth - 1];
             return `${monthName} ${ethiopianDay}, ${ethiopianYear}`;
         }
 
@@ -865,7 +917,10 @@ function EthiopianDateDisplay() {
 
             // Initialize date input with today
             const dateInput = document.getElementById('gregorian-date');
-            dateInput.value = new Date().toISOString().split('T')[0];
+            const today = new Date();
+            dateInput.value = today.getFullYear() + '-' +
+                            String(today.getMonth() + 1).padStart(2, '0') + '-' +
+                            String(today.getDate()).padStart(2, '0');
 
             // Initialize displays
             convertEthiopianDate('en');
