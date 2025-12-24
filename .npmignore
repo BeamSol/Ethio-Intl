@@ -1,0 +1,40 @@
+# Development files
+src/
+tests/
+examples/
+docs/
+demo.html
+example.html
+demo-utils.js
+test-install.js
+debug_dates.js
+test_dates.js
+simple_test.js
+jest.config.js
+rollup.config.js
+tsconfig.json
+
+# Git and editor files
+.git/
+.gitignore
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Build artifacts (keep only dist/)
+*.tsbuildinfo
+
+# Temporary files
+*.tmp
+*.temp

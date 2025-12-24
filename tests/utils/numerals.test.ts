@@ -1,4 +1,4 @@
-import { toEthiopianNumerals, fromEthiopianNumerals } from './numerals';
+import { toEthiopianNumerals, fromEthiopianNumerals } from '../../src/utils/numerals';
 
 describe('Ethiopian Numerals', () => {
   test('should convert numbers to Ethiopian numerals', () => {

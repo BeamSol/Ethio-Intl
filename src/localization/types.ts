@@ -1,16 +1,32 @@
-export type Language = 'en' | 'am' | 'om' | 'fr' | 'ti' | 'so';
+export type Language = string;
 
-export interface EthioIntlConfig {
-  defaultLanguage?: Language;
-  fallbackLanguage?: Language;
-  supportedLanguages?: Language[];
-  resources?: Record<Language, Record<string, any>>;
+export interface EthioProviderProps {
+  resources: Record<Language, Record<string, any>>;
+  defaultLang?: string;
+  fallbackLang?: string;
+  children: React.ReactNode;
 }
 
-export interface EthioIntlContextValue {
-  language: Language;
-  changeLanguage: (lang: Language) => void;
+export interface EthioIntlHookResult {
   t: (key: string, options?: any) => string;
-  isLoading: boolean;
+  currentLang: string;
+  changeLanguage: (langCode: string) => void;
+  supportedLangs: string[];
+}
+
+export interface EthioIntlEnterpriseHookResult extends EthioIntlHookResult {
+  tNamespace: (namespace: string, key: string, options?: any) => string;
+  detectLanguage: () => string;
+  isLanguageSupported: (lang: string, resources?: Record<string, any>) => boolean;
+
+  // Enterprise features for large projects
+  loadTranslations: (lang: string, translations: Record<string, any>) => void;
+  loadNamespace: (lang: string, namespace: string, translations: Record<string, any>) => void;
+  unloadNamespace: (lang: string, namespace: string) => void;
+  preloadLanguages: (langs: string[]) => Promise<void>;
+  getMissingKeys: (lang?: string) => string[];
+  exportTranslations: (lang: string) => Record<string, any>;
+  isDevelopment: boolean;
+  enableHotReload: (callback: (lang: string, translations: Record<string, any>) => void) => void;
 }
 

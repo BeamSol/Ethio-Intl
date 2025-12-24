@@ -1,271 +1,345 @@
 # 🌍 Ethio-Intl
 
 [![npm version](https://badge.fury.io/js/ethio-intl.svg)](https://badge.fury.io/js/ethio-intl)
-[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://typescriptlang.org)
-[![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)](https://reactjs.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![npm downloads](https://img.shields.io/npm/dm/ethio-intl.svg)](https://www.npmjs.com/package/ethio-intl)
+[![GitHub stars](https://img.shields.io/github/stars/BeamSol/Ethio-Intl.svg)](https://github.com/BeamSol/Ethio-Intl/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/BeamSol/Ethio-Intl.svg)](https://github.com/BeamSol/Ethio-Intl/issues)
 
-**Real-time Amharic transliteration for modern web applications**
+A modern JavaScript SDK for Ethiopian web applications with Amharic transliteration, Ethiopian calendar conversion, Geez numerals, and multi-language support.
 
-Ethio-Intl provides seamless English-to-Amharic conversion with a sophisticated transliteration system, React components, and comprehensive Ethiopian localization utilities.
+## 🎮 Live Demo
 
-![Ethio-Intl Demo](https://via.placeholder.com/800x400/007bff/ffffff?text=Ethio-Intl+Demo)
+Try the interactive demo: [**Open Demo**](https://beamsol.github.io/Ethio-Intl/demo.html)
+
+Experience real-time Amharic transliteration, Ethiopian calendar conversion, Geez numerals, and multi-language support!
 
 ## ✨ Features
 
-- **🚀 Real-time Transliteration**: Type English letters, get instant Amharic output
-- **🎯 Smart Combinations**: Automatic consonant-vowel syllable formation
-- **📝 Complete Character Coverage**: All 25+ Amharic consonants with 7 vowel forms each
-- **⚛️ React Components**: Ready-to-use SmartInput with TypeScript support
-- **🎨 Beautiful UI**: Proper Amharic typography and responsive design
-- **🔄 Bidirectional Support**: English ↔ Amharic conversion
-- **📱 Mobile Friendly**: Touch-optimized for mobile devices
-- **🌐 Localization**: Ethiopian calendar, numerals, and multi-language support
+- 🔤 **Amharic Transliteration**: Real-time English to Amharic conversion
+- 📅 **Ethiopian Calendar**: Precise Gregorian ↔ Ethiopian date conversion
+- 🔢 **Geez Numerals**: Convert Arabic numbers to traditional Geez script
+- 🌐 **Multi-language Support**: Amharic, English, Tigrinya, and Oromo
+- ⚡ **Zero Dependencies**: Pure TypeScript with no external libraries
+- 🎯 **TypeScript First**: Full type safety and IntelliSense support
+- 🪝 **React Hooks**: Custom hooks for easy React integration
 
-## 🎬 Live Demo
+## 🚀 Quick Start
 
-Try it now: **[Open Demo](demo.html)**
-
-```html
-<!-- Open demo.html in your browser to see it in action! -->
-```
-
-## 📦 Installation
+### Installation
 
 ```bash
 npm install ethio-intl
 ```
 
-## 🚀 Quick Start
+```bash
+yarn add ethio-intl
+```
+
+```bash
+pnpm add ethio-intl
+```
 
 ### Basic Usage
 
-```tsx
-import React from 'react';
-import { SmartInput } from 'ethio-intl';
+```javascript
+import { toEthDate, toEthNumber } from 'ethio-intl';
+
+// Ethiopian Calendar
+const today = new Date();
+const ethDate = toEthDate(today, 'en');
+// Result: "Tahsas 13, 2018"
+
+const ethDateAmharic = toEthDate(today, 'am');
+// Result: "ታህሳስ 13, 2018"
+
+// Geez Numerals
+const geezNumber = toEthNumber(2025);
+// Result: "፳፻፳፭"
+
+const geez100 = toEthNumber(100);
+// Result: "፻" (note: no '1' multiplier)
+```
+
+## 📚 API Reference
+
+### Calendar Functions
+
+#### `toEthDate(date, lang?)`
+Convert Gregorian date to Ethiopian date.
+
+```javascript
+import { toEthDate } from 'ethio-intl';
+
+const ethDate = toEthDate(new Date(2025, 8, 11), 'en');
+// Result: "Meskerem 1, 2018"
+
+const ethDateAmharic = toEthDate(new Date(2025, 8, 11), 'am');
+// Result: "መስከረም 1, 2018"
+```
+
+#### `isEthiopianLeapYear(year)`
+Check if Ethiopian year is a leap year.
+
+```javascript
+import { isEthiopianLeapYear } from 'ethio-intl';
+
+isEthiopianLeapYear(2018); // true
+isEthiopianLeapYear(2017); // false
+```
+
+### Numeral Functions
+
+#### `toEthNumber(num)`
+Convert Arabic number to Geez numerals.
+
+```javascript
+import { toEthNumber } from 'ethio-intl';
+
+toEthNumber(1);      // "፩"
+toEthNumber(10);     // "፲"
+toEthNumber(100);    // "፻"
+toEthNumber(1000);   // "፲፻"
+toEthNumber(2025);   // "፳፻፳፭"
+```
+
+#### `fromEthNumber(geezString)`
+Convert Geez numerals to Arabic number.
+
+```javascript
+import { fromEthNumber } from 'ethio-intl';
+
+fromEthNumber('፳፻፳፭'); // 2025
+fromEthNumber('፻');    // 100
+```
+
+### React Integration
+
+#### `EthioProvider`
+React Context provider for internationalization.
+
+```javascript
+import { EthioProvider } from 'ethio-intl';
+
+const translations = {
+  en: { translation: { welcome: 'Welcome!' } },
+  am: { translation: { welcome: 'እንኳን ደህና መጡ!' } }
+};
 
 function App() {
-  const [amharicText, setAmharicText] = React.useState('');
+  return (
+    <EthioProvider
+      resources={translations}
+      defaultLang="am"
+      fallbackLang="en"
+    >
+      <YourComponents />
+    </EthioProvider>
+  );
+}
+```
+
+#### `useEthioIntl`
+Custom hook for accessing internationalization context.
+
+```javascript
+import { useEthioIntl } from 'ethio-intl';
+
+function MyComponent() {
+  const { t, changeLanguage, currentLang } = useEthioIntl();
 
   return (
     <div>
-      <h1>እንኳን ደህና መጡ! (Welcome!)</h1>
-
-      <SmartInput
-        placeholder="Type in English..."
-        onChange={(latin, amharic) => {
-          setAmharicText(amharic);
-          console.log('Latin:', latin, 'Amharic:', amharic);
-        }}
-      />
-
-      <p>Output: <strong>{amharicText}</strong></p>
+      <h1>{t('welcome')}</h1>
+      <button onClick={() => changeLanguage('am')}>
+        Switch to Amharic
+      </button>
     </div>
   );
 }
 ```
 
-### Try These Examples
+#### `useTransliterate`
+Hook for real-time Amharic transliteration.
 
-| English Input | Amharic Output | Meaning |
-|---------------|----------------|---------|
-| `selam` | `ሰላም` | Hello |
-| `hu` | `ሁ` | He (masculine) |
-| `ne` | `ነ` | She (feminine) |
-| `dehna` | `ደህና` | Thank you |
-| `ba` | `ባ` | In/with |
-| `he` | `ሀ` | **EASIEST!** ä form (single 'e') |
-| `hee` | `ሄ` | Regular e form (double 'e') |
-| `le` | `ለ` | ä form (single 'e') |
-| `lee` | `ሌ` | Regular e form (double 'e') |
+```javascript
+import { useTransliterate } from 'ethio-intl';
 
-### How to Type ä (First Form Vowel) - Multiple Easy Methods!
+function TransliterComponent() {
+  const [text, setText] = useState('');
+  const translated = useTransliterate(text);
 
-**🎯 EASIEST: Smart 'e' handling**  
-- Single 'e' after consonant = **ä form** (he → ሀ, le → ለ)  
-- Double 'e' after consonant = **regular e form** (hee → ሄ, lee → ሌ)  
+  return (
+    <div>
+      <input
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="Type in English..."
+      />
+      <p>Amharic: {translated}</p>
+    </div>
+  );
+}
+```
 
-**Other methods:**  
-**Traditional ä**: Windows: Alt+0228, Mac: Option+u then a  
-**Numbers**: Use 1 after consonant (h1 → ሀ, l1 → ለ)
+## 🎯 Use Cases
 
-## 🏗️ Architecture
+### Financial Applications
+```javascript
+// Ethiopian banking date formatting
+const transactionDate = toEthDate(new Date(), 'am');
+console.log(`ቀን: ${transactionDate}`);
+```
 
-### Core Algorithm
+### E-commerce Platforms
+```javascript
+// Product pricing in Geez numerals
+const price = toEthNumber(2500);
+console.log(`ዋጋ: ${price} ብር`);
+```
 
-Our transliteration system uses an advanced **nested dictionary approach** with **reverse lookup**:
+### Cultural Applications
+```javascript
+// Traditional date display
+const today = new Date();
+const ethDate = toEthDate(today, 'am');
+const geezYear = toEthNumber(today.getFullYear());
 
-```typescript
-// Nested dictionary structure
-const amharicMap = {
-  "h": {
-    ä: "ሀ",    // First form (primary)
-    base: "ህ", // Sixth form (traditional base)
-    "a": "ሃ",  // Fourth form
-    "u": "ሁ",  // Second form
-    "i": "ሂ",  // Third form
-    "e": "ሄ",  // Fifth form
-    "o": "ሆ"   // Seventh form
+console.log(`የነገ ቀን: ${ethDate.replace(/\d{4}$/, geezYear)}`);
+```
+
+### Government Systems
+```javascript
+// Official document dating
+const officialDate = toEthDate(new Date(), 'am');
+console.log(`ቀን: ${officialDate}`);
+```
+
+## 🔧 Advanced Configuration
+
+### Custom Language Support
+```javascript
+const customTranslations = {
+  en: {
+    translation: { hello: 'Hello' },
+    custom: { greeting: 'Welcome' }
+  },
+  am: {
+    translation: { hello: 'ሰላም' },
+    custom: { greeting: 'እንኳን ደህና መጡ' }
   }
-  // ... 25+ more consonants
 };
 
-// Reverse lookup for combinations
-const consonantKey = reverseMap[lastCharacter];
-if (consonantKey && amharicMap[consonantKey][vowel]) {
-  // Automatic syllable formation
-}
+<EthioProvider resources={customTranslations}>
+  <App />
+</EthioProvider>
 ```
 
-### Key Innovations
+### Dynamic Translation Loading
+```javascript
+const { loadNamespace, loadTranslations } = useEthioIntl();
 
-1. **Complete 7-Form Coverage**: Unlike other systems, we support all Amharic vowel forms
-2. **Real-time Combination Detection**: As you type, consonants automatically combine with vowels
-3. **Cursor Position Management**: Prevents jumping during character replacements
-4. **Efficient Reverse Lookup**: O(1) mapping from Amharic back to English keys
-
-## 📚 Documentation
-
-- **[📖 Getting Started](docs/getting-started.md)** - Installation and setup
-- **[🔄 Transliteration Guide](docs/transliteration.md)** - Technical deep-dive
-- **[📋 API Reference](docs/api-reference.md)** - Complete API docs
-- **[💡 Examples](docs/examples.md)** - Code examples and use cases
-- **[🤝 Contributing](docs/contributing.md)** - How to contribute
-
-## 🧩 API Overview
-
-### SmartInput Component
-
-```tsx
-interface SmartInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value'> {
-  onChange?: (latinValue: string, transliteratedValue: string) => void;
-  value?: string;
-  transliterate?: boolean;
-  placeholder?: string;
-  className?: string;
-  onTransliteratedChange?: (transliteratedValue: string) => void;
-}
+// Load page-specific translations
+useEffect(() => {
+  loadNamespace('en', 'dashboard', dashboardEn);
+  loadNamespace('am', 'dashboard', dashboardAm);
+}, []);
 ```
 
-### Character Mappings
+## 🌍 Supported Languages
 
-```typescript
-import { amharicMap, reverseMap } from 'ethio-intl';
+| Language | Code | Status |
+|----------|------|--------|
+| Amharic | `am` | ✅ Full Support |
+| English | `en` | ✅ Full Support |
+| Tigrinya | `ti` | ✅ Full Support |
+| Oromo | `om` | ✅ Full Support |
 
-// Direct access
-console.log(amharicMap.h.u); // "ሁ"
-console.log(reverseMap['ሁ']); // "h"
+## 🏗️ Technical Details
 
-// All 25+ consonants supported
-console.log(Object.keys(amharicMap)); // ['h', 'l', 'm', 'r', 's', 'b', ...]
-```
+### Calendar System
+- **Ethiopian Calendar**: 13-month system (12 months × 30 days + Pagume)
+- **Leap Years**: Ethiopian year % 4 === 3
+- **New Year**: Meskerem 1 (usually September 11/12)
+- **Time Offset**: ~7-8 years behind Gregorian
 
-### Ethiopian Utilities
+### Numeral System
+- **Geez Numerals**: Unicode-based traditional script
+- **Special Rules**: No '1' multiplier for 100 (፻) and 10,000 (፼)
+- **Range**: Supports numbers up to 1,000,000+
 
-```typescript
-import {
-  toEthiopianNumerals,
-  toEthiopianDate,
-  getEthiopianMonths,
-  getEthiopianDays
-} from 'ethio-intl';
-
-// Convert to Ethiopian numerals
-console.log(toEthiopianNumerals(2025)); // "፳፻፳፭"
-
-// Ethiopian date conversion
-const ethiopian = toEthiopianDate(new Date());
-// { year: 2017, month: 4, day: 7, monthName: 'Tahsas' }
-```
-
-## 🎨 Styling
-
-### CSS Classes
-
-```css
-.ethio-smart-input              /* Container */
-.ethio-smart-input__field       /* Input field */
-.ethio-smart-input__preview     /* Preview area */
-```
-
-### Custom Styling Example
-
-```css
-.ethio-smart-input__field {
-  font-family: 'Noto Sans Ethiopic', serif;
-  font-size: 24px;
-  padding: 15px;
-  border: 3px solid #007bff;
-  border-radius: 10px;
-  transition: all 0.3s ease;
-}
-
-.ethio-smart-input__field:focus {
-  border-color: #0056b3;
-  box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
-}
-```
-
-## 🌐 Browser Support
-
-- ✅ **Chrome 60+**
-- ✅ **Firefox 55+**
-- ✅ **Safari 11+**
-- ✅ **Edge 79+**
-- ✅ **Mobile browsers**
-
-*Requires Unicode support for Amharic character display*
-
-## 📊 Performance
-
-- **⚡ Real-time**: <1ms per character
-- **💾 Memory**: ~2KB for character mappings
-- **📦 Bundle**: ~15KB gzipped
-- **🎯 Accuracy**: 100% character mapping coverage
+### Performance
+- **Bundle Size**: ~15KB minified + gzipped
+- **Zero Runtime Dependencies**: Pure TypeScript implementation
+- **Tree Shaking**: Import only what you need
 
 ## 🧪 Testing
 
 ```bash
-# Run all tests
+# Run tests
 npm test
+
+# Run tests with coverage
+npm run test:coverage
+
+# Run tests in watch mode
+npm run test:watch
+```
+
+## 📦 Build
+
+```bash
+# Development build with watch
+npm run dev
+
+# Production build
+npm run build
 
 # Type checking
 npm run type-check
 
-# Build for production
-npm run build
+# Linting
+npm run lint
 ```
 
 ## 🤝 Contributing
 
-We welcome contributions! See our [Contributing Guide](docs/contributing.md) for details.
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
-### Ways to Help
-
-- 🐛 **Report Bugs** - [GitHub Issues](https://github.com/your-org/ethio-intl/issues)
-- 💡 **Suggest Features** - [GitHub Issues](https://github.com/your-org/ethio-intl/issues)
-- 📝 **Improve Docs** - Edit files in `docs/`
-- 🔧 **Write Code** - Fix bugs or add features
-- 🧪 **Add Tests** - Improve test coverage
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## 📄 License
 
-**MIT License** - Free for personal and commercial use
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
-- Built for the **Ethiopian developer community**
-- Inspired by the need for better Amharic digital input
-- Thanks to all contributors and the open source community
+- Ethiopian developers community
+- Unicode Consortium for Ethiopic script support
+- Open source contributors
 
 ## 📞 Support
 
-- 📧 **Email**: [your-email@example.com](mailto:your-email@example.com)
-- 🐛 **Issues**: [GitHub Issues](https://github.com/your-org/ethio-intl/issues)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/your-org/ethio-intl/discussions)
+- 📧 **Email**: support@ethio-intl.dev
+- 🐛 **Issues**: [GitHub Issues](https://github.com/ethio-intl/ethio-intl/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/ethio-intl/ethio-intl/discussions)
 
 ---
 
-**Made with ❤️ for Ethiopia's digital future**
+<p align="center">
+  Made with ❤️ for the Ethiopian developer community
+</p>
 
-[🌟 Star us on GitHub](https://github.com/your-org/ethio-intl) • [📖 Read the Docs](docs/) • [🎮 Try the Demo](demo.html)
+<div align="center">
+
+  [🌐 Website](https://ethio-intl.github.io) •
+  [📚 Documentation](https://ethio-intl.github.io/docs) •
+  [🎮 Demo](https://ethio-intl.github.io/demo) •
+  [🐙 GitHub](https://github.com/ethio-intl/ethio-intl)
+
+</div>

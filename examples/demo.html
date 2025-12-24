@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethio-Intl Library Demo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .demo-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .demo-section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .demo-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .demo-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .demo-output {
+            background: #f8f9fa;
+            border: 1px solid #e1e8ed;
+            border-radius: 8px;
+            padding: 12px;
+            font-family: monospace;
+            font-size: 16px;
+            min-height: 20px;
+            word-break: break-all;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn.primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn.primary:hover {
+            background: #5a6fd8;
+        }
+
+        .btn.secondary {
+            background: #f8f9fa;
+            color: #666;
+            border: 1px solid #e1e8ed;
+        }
+
+        .btn.secondary:hover {
+            background: #e9ecef;
+        }
+
+        .language-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .lang-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="hero">
+            <h1>🌍 Ethio-Intl</h1>
+            <p>Modern Ethiopian internationalization library with Amharic transliteration, Ethiopian calendar, and Geez numerals</p>
+        </section>
+
+        <div class="demo-grid">
+            <!-- Amharic Transliteration -->
+            <div class="demo-section">
+                <h2>🔤 Amharic Transliteration</h2>
+                <div class="input-group">
+                    <label class="input-label">Type in English:</label>
+                    <input type="text" id="transliterate-input" class="demo-input" placeholder="Try: selam, hu, ba, te, ka..." />
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Amharic output:</label>
+                    <div class="demo-output" id="transliterate-output">እንኳን ደህና መጡ!</div>
+                </div>
+                <div class="button-group">
+                    <button class="btn primary" onclick="insertExample('selam')">selam</button>
+                    <button class="btn primary" onclick="insertExample('hu')">hu</button>
+                    <button class="btn primary" onclick="insertExample('ba')">ba</button>
+                    <button class="btn primary" onclick="insertExample('te')">te</button>
+                    <button class="btn primary" onclick="insertExample('ka')">ka</button>
+                </div>
+                <p style="font-size: 14px; color: #666; margin-top: 15px;">
+                    <strong>Tip:</strong> Use 'e' for ä forms, 'ee' for regular e forms
+                </p>
+            </div>
+
+            <!-- Ethiopian Calendar -->
+            <div class="demo-section">
+                <h2>📅 Ethiopian Calendar</h2>
+                <div class="input-group">
+                    <label class="input-label">Gregorian date:</label>
+                    <input type="date" id="gregorian-date" class="demo-input" />
+                </div>
+                <div class="language-buttons">
+                    <button class="lang-btn active" onclick="convertEthiopianDate('en')">🇺🇸 English</button>
+                    <button class="lang-btn" onclick="convertEthiopianDate('am')">🇪🇹 አማርኛ</button>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Ethiopian date:</label>
+                    <div class="demo-output" id="ethiopian-date"></div>
+                </div>
+            </div>
+
+            <!-- Geez Numerals -->
+            <div class="demo-section">
+                <h2>🔢 Geez Numerals</h2>
+                <div class="input-group">
+                    <label class="input-label">Arabic number:</label>
+                    <input type="number" id="arabic-number" class="demo-input" placeholder="Enter number (1-1,000,000)" min="1" max="1000000" value="2025" />
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Geez numeral:</label>
+                    <div class="demo-output" id="geez-number"></div>
+                </div>
+                <div class="button-group">
+                    <button class="btn primary" onclick="convertToGeez(1)">1</button>
+                    <button class="btn primary" onclick="convertToGeez(10)">10</button>
+                    <button class="btn primary" onclick="convertToGeez(100)">100</button>
+                    <button class="btn primary" onclick="convertToGeez(1000)">1000</button>
+                    <button class="btn primary" onclick="convertToGeez(10000)">10000</button>
+                    <button class="btn primary" onclick="convertToGeez(2025)">2025</button>
+                    <button class="btn secondary" onclick="convertToGeezFromInput()">Convert</button>
+                </div>
+            </div>
+
+            <!-- Usage Examples -->
+            <div class="demo-section">
+                <h2>💻 Usage Examples</h2>
+
+                <h3>Calendar Conversion:</h3>
+                <div class="code-block">
+                    <pre><code class="language-javascript">import { toEthDate } from 'ethio-intl';
+
+// Gregorian to Ethiopian
+const today = new Date();
+const ethDate = toEthDate(today, 'en');
+// Result: "Tahsas 13, 2018"
+
+const ethDateAmharic = toEthDate(today, 'am');
+// Result: "ታህሳስ 13, 2018"</code></pre>
+                </div>
+
+                <h3>Geez Numeral Conversion:</h3>
+                <div class="code-block">
+                    <pre><code class="language-javascript">import { toEthNumber } from 'ethio-intl';
+
+// Arabic to Geez
+const geez = toEthNumber(2025);
+// Result: "፳፻፳፭"
+
+const geez100 = toEthNumber(100);
+// Result: "፻" (note: no '1' multiplier)
+
+const geez10000 = toEthNumber(10000);
+// Result: "፼" (note: no '1' multiplier)</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Ethio-Intl. Modern Ethiopian internationalization made simple.</p>
+        </footer>
+    </div>
+
+    <script type="module">
+        // Import the actual library
+        import { toEthDate, toEthNumber } from '../dist/index.mjs';
+
+        // Make functions globally available for onclick handlers
+        window.toEthDate = toEthDate;
+        window.toEthNumber = toEthNumber;
+    </script>
+
+    <script>
+        // Multi-language translations for demo
+        const translations = {
+            en: {
+                translation: {
+                    welcome: 'Welcome to Ethio-Intl!',
+                    description: 'Experience the power of modern Amharic localization',
+                    button: 'Change Language',
+                    greeting: 'Hello',
+                    userCount: 'We have {count} users',
+                    namespaced: {
+                        header: 'Advanced Features',
+                        subtitle: 'Multi-language support made simple'
+                    }
+                }
+            },
+            am: {
+                translation: {
+                    welcome: 'እንኳን ደህና መጡ ወደ ኢትዮ-ኢንትል!',
+                    description: 'የአሁኑ የአማርኛ አካባቢ መጠቅለያ ኃይል ለምስራቅ',
+                    button: 'ቋንቋ ቀይር',
+                    greeting: 'ሰላም',
+                    userCount: '{count} ተጠቃሚዎች አሉን',
+                    namespaced: {
+                        header: 'የላቀ ባህሪያት',
+                        subtitle: 'የተለያዩ ቋንቋዎች ድጋፍ ቀላል ተደርጓል'
+                    }
+                }
+            },
+            ti: {
+                translation: {
+                    welcome: 'ቅድም ኣብ ሓቅ መጻእኩም ናብ ኢትዮ-ኢንትል!',
+                    description: 'ሓይሊ የተለመደ ትግርኛ አካባቢ መጠቅለያ ኃይል',
+                    button: 'ቛንቋ ለውጢ',
+                    greeting: 'ሰላም',
+                    userCount: '{count} ተጠቃሚታት ኣለውን',
+                    namespaced: {
+                        header: 'እተያየደ ባህርያት',
+                        subtitle: 'የተለያዩ ቋንቋዎች ድጋፍ ቀላል ተደርጓል'
+                    }
+                }
+            },
+            om: {
+                translation: {
+                    welcome: 'Baga Nagaan Dhufte Ethio-Intl!',
+                    description: 'Amaaraa ammee haaraa humna bifa',
+                    button: 'Afaan Jijjiir',
+                    greeting: 'Akkam',
+                    userCount: '{count} fayyadamaa qabna',
+                    namespaced: {
+                        header: 'Amaloota Olaanaa',
+                        subtitle: 'Deeggarsa afaan hedduu salphaa godhameera'
+                    }
+                }
+            }
+        };
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up transliteration input listener
+            const inputElement = document.getElementById('transliterate-input');
+            if (inputElement) {
+                inputElement.addEventListener('input', function(e) {
+                    // Simple transliteration for demo (would import from library)
+                    const output = document.getElementById('transliterate-output');
+                    if (output) {
+                        output.textContent = e.target.value || 'እንኳን ደህና መጡ!';
+                    }
+                });
+            }
+
+            // Set up date input
+            const dateInput = document.getElementById('gregorian-date');
+            if (dateInput) {
+                const today = new Date().toISOString().split('T')[0];
+                dateInput.value = today;
+                dateInput.addEventListener('input', () => convertEthiopianDate('en'));
+            }
+
+            // Set up number input
+            const numberInput = document.getElementById('arabic-number');
+            if (numberInput) {
+                numberInput.addEventListener('input', convertToGeezFromInput);
+            }
+
+            // Initialize displays
+            convertEthiopianDate('en');
+            convertToGeezFromInput();
+        });
+
+        // Demo functions
+        function insertExample(text) {
+            const input = document.getElementById('transliterate-input');
+            if (input) {
+                input.value = text;
+                input.focus();
+                input.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+        }
+
+        function convertEthiopianDate(lang) {
+            const dateInput = document.getElementById('gregorian-date');
+            const output = document.getElementById('ethiopian-date');
+
+            if (!dateInput || !output) return;
+
+            let date;
+            if (dateInput.value) {
+                date = new Date(dateInput.value);
+            } else {
+                date = new Date();
+            }
+
+            const ethDate = window.toEthDate(date, lang);
+            output.textContent = ethDate;
+
+            // Update active button styling
+            document.querySelectorAll('.language-buttons .lang-btn').forEach(btn => {
+                if (btn.onclick.toString().includes(`'${lang}'`)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        function convertToGeez(num) {
+            const output = document.getElementById('geez-number');
+            if (!output) return;
+
+            const number = parseInt(num);
+            if (!isNaN(number) && number >= 1 && number <= 1000000) {
+                const result = window.toEthNumber(number);
+                output.textContent = result;
+            } else {
+                output.textContent = 'Invalid Number';
+            }
+        }
+
+        function convertToGeezFromInput() {
+            const input = document.getElementById('arabic-number');
+            if (!input) return;
+
+            const num = input.value;
+            convertToGeez(num);
+        }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+</body>
+</html>

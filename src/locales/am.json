@@ -1,0 +1,15 @@
+{
+  "translation": {
+    "welcome": "እንኳን ደህና መጡ",
+    "login": "ግባ",
+    "logout": "ውጣ",
+    "save": "ላክ",
+    "cancel": "ያቁሙ",
+    "loading": "በመስቀል ላይ...",
+    "error": "ስህተት ተለለየበት",
+    "search": "ፈልግ",
+    "name": "ስም",
+    "email": "ኢሜይል",
+    "password": "መክፈቻ ቃል"
+  }
+}

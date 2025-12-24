@@ -1,0 +1,15 @@
+{
+  "translation": {
+    "welcome": "Welcome",
+    "login": "Login",
+    "logout": "Logout",
+    "save": "Save",
+    "cancel": "Cancel",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "search": "Search",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password"
+  }
+}

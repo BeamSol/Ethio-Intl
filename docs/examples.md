@@ -743,6 +743,137 @@ function BusinessCardCreator() {
 }
 ```
 
+## 🌐 Localization Wrapper Examples
+
+### Basic Language Switching
+
+```tsx
+import React from 'react';
+import { EthioProvider, useEthioIntl } from 'ethio-intl';
+
+const translations = {
+  en: { translation: { hello: 'Hello', goodbye: 'Goodbye' } },
+  am: { translation: { hello: 'ሰላም', goodbye: 'ያቀር' } },
+  fr: { translation: { hello: 'Bonjour', goodbye: 'Au revoir' } }
+};
+
+function LanguageSwitcher() {
+  const { t, currentLang, changeLanguage, supportedLangs } = useEthioIntl();
+
+  return (
+    <div>
+      <h1>{t('hello')}</h1>
+
+      <select
+        value={currentLang}
+        onChange={(e) => changeLanguage(e.target.value)}
+      >
+        {supportedLangs.map(lang => (
+          <option key={lang} value={lang}>{lang.toUpperCase()}</option>
+        ))}
+      </select>
+
+      <button onClick={() => changeLanguage('am')}>
+        {t('goodbye')} in Amharic
+      </button>
+    </div>
+  );
+}
+
+// Wrap your app
+function App() {
+  return (
+    <EthioProvider resources={translations} defaultLang="en">
+      <LanguageSwitcher />
+    </EthioProvider>
+  );
+}
+```
+
+### Multi-language Form
+
+```tsx
+import React from 'react';
+import { EthioProvider, useEthioIntl } from 'ethio-intl';
+
+const formTranslations = {
+  en: {
+    translation: {
+      name: 'Name',
+      email: 'Email',
+      submit: 'Submit'
+    }
+  },
+  am: {
+    translation: {
+      name: 'ስም',
+      email: 'ኢሜይል',
+      submit: 'ላክ'
+    }
+  }
+};
+
+function ContactForm() {
+  const { t } = useEthioIntl();
+
+  return (
+    <form>
+      <div>
+        <label>{t('name')}:</label>
+        <input type="text" placeholder={t('name')} />
+      </div>
+
+      <div>
+        <label>{t('email')}:</label>
+        <input type="email" placeholder={t('email')} />
+      </div>
+
+      <button type="submit">{t('submit')}</button>
+    </form>
+  );
+}
+
+// Usage
+function App() {
+  return (
+    <EthioProvider resources={formTranslations}>
+      <ContactForm />
+    </EthioProvider>
+  );
+}
+```
+
+### Dynamic Content Loading
+
+```tsx
+import React, { useEffect, useState } from 'react';
+import { EthioProvider, useEthioIntl } from 'ethio-intl';
+
+function NewsFeed() {
+  const { t, currentLang } = useEthioIntl();
+  const [articles, setArticles] = useState([]);
+
+  useEffect(() => {
+    // Load articles based on current language
+    fetch(`/api/articles?lang=${currentLang}`)
+      .then(res => res.json())
+      .then(setArticles);
+  }, [currentLang]);
+
+  return (
+    <div>
+      <h1>{t('news')}</h1>
+      {articles.map(article => (
+        <article key={article.id}>
+          <h2>{article.title}</h2>
+          <p>{article.summary}</p>
+        </article>
+      ))}
+    </div>
+  );
+}
+```
+
 ---
 
 For more advanced examples and integration patterns, check out our [GitHub repository](https://github.com/your-org/ethio-intl) or create an issue for specific use cases!

@@ -21,8 +21,8 @@ export default [
     external: ['react', 'react-dom', 'react/jsx-runtime'],
   },
   {
-    input: 'dist/types/index.d.ts',
-    output: [{ file: 'dist/index.d.ts', format: 'esm' }],
+    input: 'dist/index.d.ts',
+    output: [{ file: 'dist/types/index.d.ts', format: 'esm' }],
     plugins: [dts()],
   },
 ];

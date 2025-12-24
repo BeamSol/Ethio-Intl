@@ -9,8 +9,27 @@ export { useTransliterate } from './hooks/useTransliterate';
 
 // Utility Kit
 export {
+  // Legacy Arabic numerals (for backward compatibility)
   toEthiopianNumerals,
   fromEthiopianNumerals,
+
+  // Gregorian ↔ Ethiopian calendar conversion
+  toEthDate,
+  getEthiopianDate,
+  isEthiopianLeapYear,
+  getEthiopianMonthDays,
+  AMHARIC_MONTHS,
+
+  // Geez script numerals (፩፪፫...)
+  toEthNumber,
+  fromEthNumber,
+  formatEthNumber,
+  isValidGeezNumber,
+  getGeezDigit,
+  getGeezTens,
+  GEEZ_NUMERALS,
+
+  // Legacy calendar functions
   toEthiopianDate,
   fromEthiopianDate,
   getEthiopianMonths,
@@ -18,5 +37,5 @@ export {
 } from './utils';
 
 // Types
-export type { EthioIntlConfig, Language } from './localization/types';
+export type { EthioProviderProps, EthioIntlHookResult, Language } from './localization/types';
 
