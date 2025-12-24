@@ -1,4 +1,4 @@
-import { amharicMap, reverseMap } from '../utils/amharicMap';
+import { amharicMap, reverseMap } from '../../src/utils/amharicMap';
 
 describe('Amharic Mapping', () => {
   test('should have basic consonants with vowel variations', () => {

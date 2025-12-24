@@ -1,4 +1,4 @@
-import { toEthNumber, fromEthNumber, formatEthNumber, isValidGeezNumber, getGeezDigit, getGeezTens, GEEZ_NUMERALS } from './numbers';
+import { toEthNumber, fromEthNumber, formatEthNumber, isValidGeezNumber, getGeezDigit, getGeezTens, GEEZ_NUMERALS } from '../../src/utils/numbers';
 
 describe('Geez Numeral Utilities', () => {
   describe('GEEZ_NUMERALS constants', () => {

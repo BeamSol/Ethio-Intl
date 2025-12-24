@@ -1,4 +1,4 @@
-import { toEthDate, getEthiopianDate, isEthiopianLeapYear, getEthiopianMonthDays, AMHARIC_MONTHS } from './date';
+import { toEthDate, getEthiopianDate, isEthiopianLeapYear, getEthiopianMonthDays, AMHARIC_MONTHS } from '../../src/utils/date';
 
 describe('Ethiopian Calendar Utilities', () => {
   describe('AMHARIC_MONTHS', () => {
