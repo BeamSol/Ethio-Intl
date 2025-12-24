@@ -642,6 +642,23 @@ function EthiopianApp() {
             return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
         }
 
+        function getEthiopianNewYear(gregorianYear) {
+            const day = isGregorianLeapYear(gregorianYear) ? 12 : 11;
+            return new Date(Date.UTC(gregorianYear, 8, day, 12, 0, 0, 0));
+        }
+
+        function getEthiopianYear(gregorianDate) {
+            const gregorianYear = gregorianDate.getFullYear();
+            const newYearDate = getEthiopianNewYear(gregorianYear);
+            const normalizedDate = new Date(Date.UTC(gregorianDate.getFullYear(), gregorianDate.getMonth(), gregorianDate.getDate(), 12, 0, 0, 0));
+
+            if (normalizedDate < newYearDate) {
+                return gregorianYear - 8;
+            } else {
+                return gregorianYear - 7;
+            }
+        }
+
         // Ethiopian leap year check
         function isEthiopianLeapYear(ethiopianYear) {
             return ethiopianYear % 4 === 3;
@@ -713,52 +730,6 @@ function EthiopianApp() {
         }
 
         // Geez numeral conversion for demo
-        function toEthNumberDemo(num) {
-            if (num < 1 || num > 1000000) return num.toString();
-
-            // Common test cases
-            if (num === 1) return '፩';
-            if (num === 10) return '፲';
-            if (num === 100) return '፻';
-            if (num === 1000) return '፲፻';
-            if (num === 10000) return '፼';
-            if (num === 2025) return '፳፻፳፭';
-
-            let result = '';
-            let remaining = num;
-
-            // Handle ten-thousands
-            if (remaining >= 10000) {
-                const tenThousands = Math.floor(remaining / 10000);
-                remaining %= 10000;
-                if (tenThousands === 1) {
-                    result += GEEZ_NUMERALS.tenThousands;
-                } else if (tenThousands >= 2 && tenThousands <= 9) {
-                    result += GEEZ_NUMERALS.tens[tenThousands] + GEEZ_NUMERALS.tenThousands;
-                }
-            }
-
-            // Handle hundreds
-            if (remaining >= 100) {
-                const hundreds = Math.floor(remaining / 100);
-                remaining %= 100;
-                if (hundreds === 1) {
-                    result += GEEZ_NUMERALS.hundreds;
-                } else if (hundreds >= 2 && hundreds <= 9) {
-                    result += GEEZ_NUMERALS.tens[hundreds] + GEEZ_NUMERALS.hundreds;
-                }
-            }
-
-            // Handle tens and ones
-            if (remaining > 0) {
-                const tens = Math.floor(remaining / 10);
-                const ones = remaining % 10;
-                if (tens > 0) result += GEEZ_NUMERALS.tens[tens];
-                if (ones > 0) result += GEEZ_NUMERALS.ones[ones];
-            }
-
-            return result;
-        }
 
         // Amharic month names (matching library)
         const AMHARIC_MONTHS = {
@@ -772,13 +743,6 @@ function EthiopianApp() {
             ]
         };
 
-        // Geez numerals mapping (matching library)
-        const GEEZ_NUMERALS = {
-            ones: ['', '፩', '፪', '፫', '፬', '፭', '፮', '፯', '፰', '፱'],
-            tens: ['', '፲', '፳', '፴', '፵', '፶', '፷', '፸', '፹', '፺'],
-            hundreds: '፻',
-            tenThousands: '፼'
-        };
 
         // Tab switching functionality
         function showTab(tabName) {
@@ -816,6 +780,58 @@ function EthiopianApp() {
             input.focus();
         }
 
+        // Embedded Ethiopian date conversion (matches library)
+        const AMHARIC_MONTHS_EMBEDDED = {
+            en: [
+                "Meskerem", "Tikimt", "Hidar", "Tahsas", "Tir", "Yekatit",
+                "Megabit", "Miazia", "Genbot", "Sene", "Hamle", "Nehase", "Pagume"
+            ],
+            am: [
+                "መስከረም", "ጥቅምት", "ህዳር", "ታህሳስ", "ጥር", "የካቲት",
+                "መጋቢት", "ሚያዝያ", "ጀንቦት", "ሰኔ", "ሐምሌ", "ነሐሴ", "ጳጉሜ"
+            ]
+        };
+
+        function toEthDateEmbedded(inputDate, lang = 'en') {
+            const date = new Date(Date.UTC(
+                inputDate.getFullYear(),
+                inputDate.getMonth(),
+                inputDate.getDate(),
+                12, 0, 0, 0
+            ));
+
+            const gregorianYear = date.getUTCFullYear();
+            let ethiopianYear = getEthiopianYear(inputDate);
+            let newYearDate = getEthiopianNewYear(gregorianYear);
+
+            const normalizedInputDate = new Date(Date.UTC(inputDate.getFullYear(), inputDate.getMonth(), inputDate.getDate(), 12, 0, 0, 0));
+            if (normalizedInputDate < newYearDate) {
+                ethiopianYear = getEthiopianYear(inputDate);
+                newYearDate = getEthiopianNewYear(gregorianYear - 1);
+            }
+
+            let daysDiff = Math.floor((date.getTime() - newYearDate.getTime()) / (1000 * 60 * 60 * 24));
+
+            let ethiopianMonth, ethiopianDay;
+
+            if (daysDiff < 360) {
+                ethiopianMonth = Math.floor(daysDiff / 30) + 1;
+                ethiopianDay = (daysDiff % 30) + 1;
+            } else {
+                const pagumeDays = daysDiff - 360;
+                if (pagumeDays < 6) { // Assuming non-leap year for demo
+                    ethiopianMonth = 13;
+                    ethiopianDay = pagumeDays + 1;
+                } else {
+                    ethiopianMonth = 1;
+                    ethiopianDay = pagumeDays - 5;
+                }
+            }
+
+            const monthName = AMHARIC_MONTHS_EMBEDDED[lang][ethiopianMonth - 1];
+            return `${monthName} ${ethiopianDay}, ${ethiopianYear}`;
+        }
+
         // Ethiopian Calendar functions
         function convertEthiopianDate(lang) {
             const dateInput = document.getElementById('gregorian-date');
@@ -828,7 +844,7 @@ function EthiopianApp() {
                 date = new Date();
             }
 
-            const ethDate = toEthDateDemo(date, lang);
+            const ethDate = toEthDateEmbedded(date, lang);
             output.textContent = ethDate;
 
             // Update active button styling
@@ -841,12 +857,74 @@ function EthiopianApp() {
             });
         }
 
+        // Embedded Geez numeral conversion (matches library exactly)
+        const GEEZ_NUMERALS = {
+            ones: ['', '፩', '፪', '፫', '፬', '፭', '፮', '፯', '፰', '፱'],
+            tens: ['', '፲', '፳', '፴', '፵', '፶', '፷', '፸', '፹', '፺'],
+            hundreds: '፻',
+            tenThousands: '፼'
+        };
+
+        function toEthNumberEmbedded(num) {
+            if (!Number.isInteger(num) || num < 1 || num > 1000000) {
+                return 'Invalid number';
+            }
+
+            let result = '';
+            let remaining = num;
+
+            // Handle ten-thousands (፼)
+            if (remaining >= 10000) {
+                const tenThousands = Math.floor(remaining / 10000);
+                remaining %= 10000;
+
+                if (tenThousands === 1) {
+                    result += GEEZ_NUMERALS.tenThousands;
+                } else if (tenThousands >= 2 && tenThousands <= 9) {
+                    result += GEEZ_NUMERALS.tens[tenThousands] + GEEZ_NUMERALS.tenThousands;
+                } else if (tenThousands >= 10) {
+                    result += toEthNumberEmbedded(tenThousands) + GEEZ_NUMERALS.tenThousands;
+                }
+            }
+
+            // Handle hundreds and thousands (፻)
+            if (remaining >= 100) {
+                const hundreds = Math.floor(remaining / 100);
+                remaining %= 100;
+
+                if (hundreds === 1) {
+                    result += GEEZ_NUMERALS.hundreds;
+                } else if (hundreds >= 2 && hundreds <= 9) {
+                    result += GEEZ_NUMERALS.tens[hundreds] + GEEZ_NUMERALS.hundreds;
+                } else if (hundreds >= 10) {
+                    result += toEthNumberEmbedded(hundreds) + GEEZ_NUMERALS.hundreds;
+                }
+            }
+
+            // Handle tens and ones
+            if (remaining > 0) {
+                const tens = Math.floor(remaining / 10);
+                const ones = remaining % 10;
+
+                if (tens > 0) {
+                    result += GEEZ_NUMERALS.tens[tens];
+                }
+
+                if (ones > 0) {
+                    result += GEEZ_NUMERALS.ones[ones];
+                }
+            }
+
+            return result;
+        }
+
         // Geez Numeral functions
         function convertToGeez(num) {
             const output = document.getElementById('geez-number');
             const number = parseInt(num);
+
             if (!isNaN(number) && number >= 1 && number <= 1000000) {
-                const result = toEthNumberDemo(number);
+                const result = toEthNumberEmbedded(number);
                 output.textContent = result;
             } else {
                 output.textContent = 'Invalid Number';
@@ -1007,6 +1085,7 @@ function EthiopianApp() {
 
             return result || 'እንኳን ደህና መጡ!';
         }
+
 
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Import</title>
+</head>
+<body>
+    <h1>Testing Library Import</h1>
+    <div id="output">Loading...</div>
+
+    <script>
+        (async function() {
+            try {
+                const module = await import('./dist/index.mjs');
+                console.log('Module loaded:', module);
+
+                const result = module.toEthNumber(2025);
+                console.log('2025 in Geez:', result);
+
+                document.getElementById('output').textContent = 'Success: 2025 = ' + result;
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('output').textContent = 'Error: ' + error.message;
+            }
+        })();
+    </script>
+</body>
+</html>

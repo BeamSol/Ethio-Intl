@@ -1,46 +1,83 @@
 {
   "name": "ethio-intl",
   "version": "1.0.0",
-  "description": "A JavaScript/React SDK for Ethiopian web applications with bilingual support, transliteration, and utility functions",
+  "description": "A modern JavaScript SDK for Ethiopian web applications with Amharic transliteration, Ethiopian calendar conversion, Geez numerals, and multi-language support",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "lint": "eslint src --ext .ts,.tsx",
-    "type-check": "tsc --noEmit"
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "type-check": "tsc --noEmit",
+    "prepublishOnly": "npm run build && npm run test",
+    "pack": "npm pack",
+    "clean": "rm -rf dist"
   },
   "keywords": [
     "ethiopian",
+    "ethiopia",
     "internationalization",
     "i18n",
+    "localization",
     "amharic",
     "oromo",
+    "tigrinya",
     "transliteration",
     "ethiopic",
+    "ethiopian-calendar",
+    "geez-numerals",
     "react",
-    "javascript"
+    "javascript",
+    "typescript",
+    "sdk",
+    "cultural-computing"
   ],
-  "author": "Ethio-Intl Team",
+  "author": "BeamSol <contact@beamsol.com>",
   "license": "MIT",
   "type": "module",
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-org/ethio-intl.git"
+    "url": "https://github.com/BeamSol/Ethio-Intl.git"
   },
   "bugs": {
-    "url": "https://github.com/your-org/ethio-intl/issues"
+    "url": "https://github.com/BeamSol/Ethio-Intl/issues"
   },
-  "homepage": "https://github.com/your-org/ethio-intl#readme",
+  "homepage": "https://beamsol.github.io/Ethio-Intl",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/BeamSol"
+  },
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.0.0",
