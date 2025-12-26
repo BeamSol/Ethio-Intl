@@ -58,3 +58,5 @@ return <p>{tNamespace('auth', 'login')}</p>;
 - Include placeholders for dynamic content: `"Hello {name}!"`
 
 
+
+
