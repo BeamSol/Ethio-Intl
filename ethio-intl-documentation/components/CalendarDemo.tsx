@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { toEthDate } from "ethio-intl";
 
 const CalendarDemo: React.FC = () => {
   const [gregorianDate, setGregorianDate] = useState(
@@ -6,139 +7,6 @@ const CalendarDemo: React.FC = () => {
   );
   const [language, setLanguage] = useState<"en" | "am">("en");
   const [ethiopianDate, setEthiopianDate] = useState("");
-
-  // Amharic month names (matching library)
-  const AMHARIC_MONTHS = {
-    en: [
-      "Meskerem",
-      "Tikimt",
-      "Hidar",
-      "Tahsas",
-      "Tir",
-      "Yekatit",
-      "Megabit",
-      "Miazia",
-      "Genbot",
-      "Sene",
-      "Hamle",
-      "Nehase",
-      "Pagume",
-    ],
-    am: [
-      "መስከረም",
-      "ጥቅምት",
-      "ህዳር",
-      "ታህሳስ",
-      "ጥር",
-      "የካቲት",
-      "መጋቢት",
-      "ሚያዝያ",
-      "ጀንቦት",
-      "ሰኔ",
-      "ሐምሌ",
-      "ነሐሴ",
-      "ጳጉሜ",
-    ],
-  };
-
-  // Gregorian leap year check
-  const isGregorianLeapYear = (year: number): boolean => {
-    return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
-  };
-
-  // Get Ethiopian New Year date
-  const getEthiopianNewYear = (gregorianYear: number): Date => {
-    const day = isGregorianLeapYear(gregorianYear) ? 12 : 11;
-    return new Date(Date.UTC(gregorianYear, 8, day, 12, 0, 0, 0)); // September 11 or 12 at noon UTC
-  };
-
-  // Get Ethiopian year for a Gregorian date
-  const getEthiopianYear = (gregorianDate: Date): number => {
-    const gregorianYear = gregorianDate.getFullYear();
-    const newYearDate = getEthiopianNewYear(gregorianYear);
-    const normalizedDate = new Date(
-      Date.UTC(
-        gregorianDate.getFullYear(),
-        gregorianDate.getMonth(),
-        gregorianDate.getDate(),
-        12,
-        0,
-        0,
-        0
-      )
-    );
-
-    if (normalizedDate < newYearDate) {
-      return gregorianYear - 8;
-    } else {
-      return gregorianYear - 7;
-    }
-  };
-
-  // Ethiopian leap year check
-  const isEthiopianLeapYear = (ethiopianYear: number): boolean => {
-    return ethiopianYear % 4 === 3;
-  };
-
-  // Precise Ethiopian date conversion (matching library)
-  const toEthDate = (inputDate: Date, lang: "en" | "am" = "en"): string => {
-    const date = new Date(
-      Date.UTC(
-        inputDate.getFullYear(),
-        inputDate.getMonth(),
-        inputDate.getDate(),
-        12,
-        0,
-        0,
-        0
-      )
-    );
-
-    const gregorianYear = date.getUTCFullYear();
-    let ethiopianYear = getEthiopianYear(inputDate);
-    let newYearDate = getEthiopianNewYear(gregorianYear);
-
-    const normalizedInputDate = new Date(
-      Date.UTC(
-        inputDate.getFullYear(),
-        inputDate.getMonth(),
-        inputDate.getDate(),
-        12,
-        0,
-        0,
-        0
-      )
-    );
-    if (normalizedInputDate < newYearDate) {
-      ethiopianYear = getEthiopianYear(inputDate);
-      newYearDate = getEthiopianNewYear(gregorianYear - 1);
-    }
-
-    let daysDiff = Math.floor(
-      (date.getTime() - newYearDate.getTime()) / (1000 * 60 * 60 * 24)
-    );
-
-    let ethiopianMonth: number, ethiopianDay: number;
-
-    if (daysDiff < 360) {
-      ethiopianMonth = Math.floor(daysDiff / 30) + 1;
-      ethiopianDay = (daysDiff % 30) + 1;
-    } else {
-      const pagumeDays = daysDiff - 360;
-      const isLeapYear = isEthiopianLeapYear(ethiopianYear);
-
-      if (pagumeDays < (isLeapYear ? 6 : 5)) {
-        ethiopianMonth = 13;
-        ethiopianDay = pagumeDays + 1;
-      } else {
-        ethiopianMonth = 1;
-        ethiopianDay = pagumeDays - (isLeapYear ? 6 : 5) + 1;
-      }
-    }
-
-    const monthName = AMHARIC_MONTHS[lang][ethiopianMonth - 1];
-    return `${monthName} ${ethiopianDay}, ${ethiopianYear}`;
-  };
 
   useEffect(() => {
     const date = new Date(gregorianDate);
@@ -155,7 +23,6 @@ const CalendarDemo: React.FC = () => {
   };
 
   const today = new Date().toISOString().split("T")[0];
-  const todayEthiopian = toEthDate(new Date(), language);
 
   return (
     <section className="my-10 rounded-xl border border-gray-200 bg-white">
