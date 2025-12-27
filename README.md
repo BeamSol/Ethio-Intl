@@ -9,6 +9,15 @@
 
 A modern JavaScript SDK for Ethiopian web applications with Amharic transliteration, Ethiopian calendar conversion, Geez numerals, and multi-language support.
 
+
+## Project Video
+
+Click the image below to watch our project video:
+
+[![Watch the video](/assets/image.png)](https://youtube.com/shorts/V1f8JCCibDg)
+
+
+
 ## 🎮 Live Demo
 
 Try the interactive demo: [**Open Demo**](https://beamsol.github.io/Ethio-Intl/demo.html)
