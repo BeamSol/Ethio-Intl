@@ -27,70 +27,70 @@ export const DOC_CONTENT: Record<string, React.ReactNode> = {
               icon: "⚛️",
               description: "Full React integration with hooks, context API, and component ecosystem.",
               features: ["useEthioIntl hook", "EthioProvider context", "SmartInput component", "Real-time transliteration"],
-              color: "from-blue-500 to-blue-600"
+              color: "bg-gradient-to-r from-blue-500 to-blue-600"
             },
             {
               name: "Vanilla JavaScript",
               icon: "🟨",
               description: "Direct JavaScript usage without framework dependencies.",
               features: ["ESM imports", "Tree-shaking friendly", "Zero dependencies", "Universal compatibility"],
-              color: "from-yellow-500 to-yellow-600"
+              color: "bg-gradient-to-r from-yellow-500 to-yellow-600"
             },
             {
               name: "Next.js",
               icon: "▲",
               description: "Server-side rendering support with Next.js applications.",
               features: ["SSR compatibility", "Static generation", "API routes integration", "Dynamic imports"],
-              color: "from-gray-800 to-gray-900"
+              color: "bg-gradient-to-r from-gray-800 to-gray-900"
             },
             {
               name: "Vue.js",
               icon: "💚",
               description: "Vue 3 composition API and options API support.",
               features: ["Vue composables", "Plugin integration", "Reactive state", "Template directives"],
-              color: "from-green-500 to-green-600"
+              color: "bg-gradient-to-r from-green-500 to-green-600"
             },
             {
               name: "Angular",
               icon: "🅰️",
               description: "Angular services, pipes, and dependency injection.",
               features: ["Angular services", "Custom pipes", "Dependency injection", "Change detection"],
-              color: "from-red-500 to-red-600"
+              color: "bg-gradient-to-r from-red-500 to-red-600"
             },
             {
               name: "Svelte",
               icon: "🧡",
               description: "Svelte stores and reactive statements integration.",
               features: ["Svelte stores", "Reactive statements", "Component integration", "Bundle optimization"],
-              color: "from-orange-500 to-orange-600"
+              color: "bg-gradient-to-r from-orange-500 to-orange-600"
             },
             {
               name: "Node.js",
               icon: "🟢",
               description: "Server-side JavaScript with full Ethiopian localization.",
               features: ["Server-side rendering", "API development", "CLI tools", "Backend integration"],
-              color: "from-green-600 to-green-700"
+              color: "bg-gradient-to-r from-green-600 to-green-700"
             },
             {
               name: "TypeScript",
               icon: "🔷",
               description: "Full TypeScript support with type definitions.",
               features: ["Type definitions", "IntelliSense", "Type safety", "IDE integration"],
-              color: "from-blue-600 to-blue-700"
+              color: "bg-gradient-to-r from-blue-600 to-blue-700"
             },
             {
               name: "Browser",
               icon: "🌐",
               description: "Direct browser usage with CDN or bundler integration.",
               features: ["CDN delivery", "UMD builds", "Browser compatibility", "Progressive enhancement"],
-              color: "from-purple-500 to-purple-600"
+              color: "bg-gradient-to-r from-purple-500 to-purple-600"
             }
           ].map((framework) => (
             <div
               key={framework.name}
               className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow"
             >
-              <div className={`inline-flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-r ${framework.color} text-white text-xl mb-4`}>
+              <div className={`inline-flex h-12 w-12 items-center justify-center rounded-lg ${framework.color} text-white text-xl mb-4`}>
                 {framework.icon}
               </div>
 
