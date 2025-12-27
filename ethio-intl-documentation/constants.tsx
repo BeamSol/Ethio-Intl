@@ -1,10 +1,11 @@
-
-import React from 'react';
-import LiveDemo from './components/LiveDemo';
-import MultiLanguageDemo from './components/MultiLanguageDemo';
+import React from "react";
+import LiveDemo from "./components/LiveDemo";
+import MultiLanguageDemo from "./components/MultiLanguageDemo";
+import GeezNumeralsDemo from "./components/GeezNumeralsDemo";
+import CalendarDemo from "./components/calendarDemo";
 
 export const DOC_CONTENT: Record<string, React.ReactNode> = {
-  'welcome': (
+  welcome: (
     <div className="max-w-none">
       {/* Page header */}
       <header className="mb-10">
@@ -13,7 +14,8 @@ export const DOC_CONTENT: Record<string, React.ReactNode> = {
         </h1>
         <p className="mt-3 max-w-2xl text-lg text-gray-600">
           A lightweight internationalization toolkit for Ethiopian languages,
-          focused on accurate Amharic transliteration and developer-friendly APIs.
+          focused on accurate Amharic transliteration and developer-friendly
+          APIs.
         </p>
       </header>
 
@@ -29,28 +31,28 @@ export const DOC_CONTENT: Record<string, React.ReactNode> = {
         <div className="grid gap-4 sm:grid-cols-2">
           {[
             {
-              title: 'Real-time transliteration',
-              desc: 'Convert Latin input to Amharic instantly while typing.',
+              title: "Real-time transliteration",
+              desc: "Convert Latin input to Amharic instantly while typing.",
             },
             {
-              title: 'Smart consonant–vowel logic',
-              desc: 'Automatic handling of Ethiopian syllabic combinations.',
+              title: "Smart consonant–vowel logic",
+              desc: "Automatic handling of Ethiopian syllabic combinations.",
             },
             {
-              title: 'Complete character coverage',
-              desc: 'Supports full Amharic consonant sets and vowel forms.',
+              title: "Complete character coverage",
+              desc: "Supports full Amharic consonant sets and vowel forms.",
             },
             {
-              title: 'Reusable React components',
-              desc: 'Drop-in components designed for modern React apps.',
+              title: "Reusable React components",
+              desc: "Drop-in components designed for modern React apps.",
             },
             {
-              title: 'Type-safe API',
-              desc: 'Built with TypeScript for better developer experience.',
+              title: "Type-safe API",
+              desc: "Built with TypeScript for better developer experience.",
             },
             {
-              title: 'Scalable architecture',
-              desc: 'Clean internal structure that’s easy to extend.',
+              title: "Scalable architecture",
+              desc: "Clean internal structure that’s easy to extend.",
             },
           ].map((item) => (
             <div
@@ -60,9 +62,7 @@ export const DOC_CONTENT: Record<string, React.ReactNode> = {
               <h3 className="text-sm font-semibold text-gray-900">
                 {item.title}
               </h3>
-              <p className="mt-1 text-sm text-gray-600">
-                {item.desc}
-              </p>
+              <p className="mt-1 text-sm text-gray-600">{item.desc}</p>
             </div>
           ))}
         </div>
@@ -88,7 +88,7 @@ export const DOC_CONTENT: Record<string, React.ReactNode> = {
       </section>
     </div>
   ),
-  'getting-started': (
+  "getting-started": (
     <div className="max-w-none">
       {/* Header */}
       <header className="mb-10">
@@ -121,7 +121,7 @@ export const DOC_CONTENT: Record<string, React.ReactNode> = {
         </h2>
 
         <p className="mb-4 text-gray-600">
-          The <code className="text-gray-900 font-medium">SmartInput</code>{' '}
+          The <code className="text-gray-900 font-medium">SmartInput</code>{" "}
           component provides an out-of-the-box transliteration experience with
           minimal setup.
         </p>
@@ -148,16 +148,15 @@ function MyComponent() {
       {/* Note */}
       <section className="max-w-2xl">
         <div className="rounded-md border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-700">
-          <strong className="font-medium text-gray-900">Note:</strong>{' '}
-          For best rendering quality, make sure the{' '}
-          <code className="font-medium">Noto Sans Ethiopic</code> font is loaded in
-          your global styles.
+          <strong className="font-medium text-gray-900">Note:</strong> For best
+          rendering quality, make sure the{" "}
+          <code className="font-medium">Noto Sans Ethiopic</code> font is loaded
+          in your global styles.
         </div>
       </section>
     </div>
-  )
-  ,
-  'transliteration-guide': (
+  ),
+  "transliteration-guide": (
     <div className="max-w-none">
       {/* Header */}
       <header className="mb-10">
@@ -188,11 +187,16 @@ function MyComponent() {
               Standard input
             </h3>
             <p className="text-sm text-gray-600 mb-2">
-              Use a consonant followed by <code>e</code> to produce the first form.
+              Use a consonant followed by <code>e</code> to produce the first
+              form.
             </p>
             <div className="space-y-1 text-sm text-gray-700">
-              <div><code>he</code> → <span className="amharic text-lg">ሀ</span></div>
-              <div><code>le</code> → <span className="amharic text-lg">ለ</span></div>
+              <div>
+                <code>he</code> → <span className="amharic text-lg">ሀ</span>
+              </div>
+              <div>
+                <code>le</code> → <span className="amharic text-lg">ለ</span>
+              </div>
             </div>
           </div>
 
@@ -204,8 +208,12 @@ function MyComponent() {
               Doubling the vowel produces the fifth form.
             </p>
             <div className="space-y-1 text-sm text-gray-700">
-              <div><code>hee</code> → <span className="amharic text-lg">ሄ</span></div>
-              <div><code>lee</code> → <span className="amharic text-lg">ሌ</span></div>
+              <div>
+                <code>hee</code> → <span className="amharic text-lg">ሄ</span>
+              </div>
+              <div>
+                <code>lee</code> → <span className="amharic text-lg">ሌ</span>
+              </div>
             </div>
           </div>
         </div>
@@ -234,12 +242,12 @@ function MyComponent() {
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
               {[
-                { key: 'he / h1', char: 'ሀ', ex: 'he → ሀ' },
-                { key: 'le / l1', char: 'ለ', ex: 'le → ለ' },
-                { key: 'me / m1', char: 'መ', ex: 'me → መ' },
-                { key: 're / r1', char: 'ረ', ex: 're → ረ' },
-                { key: 'se / s1', char: 'ሰ', ex: 'se → ሰ' },
-                { key: 'she / sh1', char: 'ሸ', ex: 'she → ሸ' },
+                { key: "he / h1", char: "ሀ", ex: "he → ሀ" },
+                { key: "le / l1", char: "ለ", ex: "le → ለ" },
+                { key: "me / m1", char: "መ", ex: "me → መ" },
+                { key: "re / r1", char: "ረ", ex: "re → ረ" },
+                { key: "se / s1", char: "ሰ", ex: "se → ሰ" },
+                { key: "she / sh1", char: "ሸ", ex: "she → ሸ" },
               ].map((row) => (
                 <tr key={row.key}>
                   <td className="px-6 py-3 text-sm font-medium text-gray-900">
@@ -248,9 +256,7 @@ function MyComponent() {
                   <td className="px-6 py-3 text-xl amharic text-gray-900">
                     {row.char}
                   </td>
-                  <td className="px-6 py-3 text-sm text-gray-600">
-                    {row.ex}
-                  </td>
+                  <td className="px-6 py-3 text-sm text-gray-600">{row.ex}</td>
                 </tr>
               ))}
             </tbody>
@@ -258,17 +264,17 @@ function MyComponent() {
         </div>
       </section>
     </div>
-  )
-  ,
-  'examples': (
+  ),
+  examples: (
     <div className="prose max-w-none">
       <h1 className="text-4xl font-extrabold text-gray-900 mb-6">
         Examples & Usage Patterns
       </h1>
 
       <p className="text-lg text-gray-600 mb-10">
-        Below are practical examples demonstrating how <strong>Ethio-Intl</strong> can be integrated
-        into real-world applications, from form handling to live UI previews.
+        Below are practical examples demonstrating how{" "}
+        <strong>Ethio-Intl</strong> can be integrated into real-world
+        applications, from form handling to live UI previews.
       </p>
 
       <div className="space-y-14">
@@ -279,9 +285,10 @@ function MyComponent() {
           </h2>
 
           <p className="text-gray-600 mb-4">
-            Use <code>SmartInput</code> inside forms to capture both Latin input and its
-            corresponding Amharic transliteration. This is useful for registration forms,
-            profiles, or official records that require bilingual data.
+            Use <code>SmartInput</code> inside forms to capture both Latin input
+            and its corresponding Amharic transliteration. This is useful for
+            registration forms, profiles, or official records that require
+            bilingual data.
           </p>
 
           <pre className="bg-gray-900 text-gray-100 p-6 rounded-xl text-sm overflow-x-auto">
@@ -303,7 +310,8 @@ function MyComponent() {
           </pre>
 
           <p className="mt-3 text-sm text-gray-500 italic">
-            This pattern ensures you always store both representations while keeping the UI simple for users.
+            This pattern ensures you always store both representations while
+            keeping the UI simple for users.
           </p>
         </section>
 
@@ -314,27 +322,273 @@ function MyComponent() {
           </h2>
 
           <p className="text-gray-600 mb-6">
-            Ethio-Intl can power real-time previews for identity cards, profiles, or branding components.
-            As users type, Amharic text updates instantly in the UI.
+            Ethio-Intl can power real-time previews for identity cards,
+            profiles, or branding components. As users type, Amharic text
+            updates instantly in the UI.
           </p>
 
           <div className="p-8 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl shadow-xl max-w-sm mx-auto text-white amharic">
             <div className="text-3xl font-bold mb-2">ዮናስ ገብረማርያም</div>
             <div className="text-lg opacity-80 mb-4">ሲኒየር ሶፍትዌር መሐንዲስ</div>
             <div className="text-sm opacity-70 leading-relaxed">
-              📞 +251 911 123 456<br />
+              📞 +251 911 123 456
+              <br />
               ✉️ yonas@example.com
             </div>
           </div>
 
           <p className="mt-4 text-center text-sm text-gray-500 italic">
-            Example of a real-time preview component powered by Ethio-Intl transliteration.
+            Example of a real-time preview component powered by Ethio-Intl
+            transliteration.
           </p>
         </section>
       </div>
     </div>
   ),
-  'multi-language': (
+  calendar: (
+    <div className="max-w-none">
+      {/* Header */}
+      <header className="mb-10">
+        <h1 className="text-4xl font-bold tracking-tight text-gray-900">
+          📅 Ethiopian Calendar
+        </h1>
+        <p className="mt-3 max-w-2xl text-lg text-gray-600">
+          Precise astronomical calculations for converting between Gregorian and
+          Ethiopian calendars with automatic leap year handling and the
+          traditional 7-8 year offset.
+        </p>
+      </header>
+
+      {/* Live Demo */}
+      <CalendarDemo />
+
+      {/* Features */}
+      <section className="mt-14">
+        <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+          Key Features
+        </h2>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          {[
+            {
+              title: "Astronomical Precision",
+              desc: "Uses Julian Day Number algorithm for mathematically precise Gregorian ↔ Ethiopian conversion.",
+            },
+            {
+              title: "Automatic Leap Year Handling",
+              desc: "Seamlessly handles Ethiopian leap years (every 4th year, ending with 3) and Gregorian leap years.",
+            },
+            {
+              title: "7-8 Year Offset",
+              desc: "Correctly accounts for the traditional Ethiopian calendar offset from the Gregorian calendar.",
+            },
+            {
+              title: "Bidirectional Conversion",
+              desc: "Convert from Gregorian to Ethiopian and vice versa with full accuracy.",
+            },
+            {
+              title: "Multi-language Support",
+              desc: "Display Ethiopian dates in English or Amharic month names.",
+            },
+            {
+              title: "13th Month (Pagume)",
+              desc: "Properly handles the 13th month (Pagume) which occurs during Ethiopian leap years.",
+            },
+          ].map((item) => (
+            <div
+              key={item.title}
+              className="rounded-lg border border-gray-200 bg-white p-4"
+            >
+              <h3 className="text-sm font-semibold text-gray-900">
+                {item.title}
+              </h3>
+              <p className="mt-1 text-sm text-gray-600">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Usage Examples */}
+      <section className="mt-16">
+        <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+          Usage Examples
+        </h2>
+
+        <div className="space-y-6">
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+              Basic Date Conversion
+            </h3>
+            <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto">
+              {`import { toEthDate, fromEthDate } from 'ethio-intl';
+
+// Gregorian to Ethiopian
+const gregorianDate = new Date('2024-01-15');
+const ethiopianDate = toEthDate(gregorianDate, 'en');
+// Result: "Tir 7, 2016"
+
+const ethiopianDateAmharic = toEthDate(gregorianDate, 'am');
+// Result: "ጥር 7, 2016"
+
+// Ethiopian to Gregorian (if available)
+const gregorian = fromEthDate(2016, 4, 7); // Year, Month, Day
+// Returns: Date object representing Gregorian equivalent`}
+            </pre>
+          </div>
+
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+              Handling Special Cases
+            </h3>
+            <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto">
+              {`import { toEthDate } from 'ethio-intl';
+
+// Ethiopian New Year (Meskerem 1)
+const newYear = new Date('2024-09-11'); // Gregorian date
+const ethNewYear = toEthDate(newYear);
+// Result: "Meskerem 1, 2017"
+
+// During Ethiopian leap year (Pagume month)
+const leapYearDate = new Date('2023-09-11');
+const ethLeapDate = toEthDate(leapYearDate);
+// Result: "Pagume 5, 2016" (13th month)
+
+// Regular vs Leap year difference
+const regularYear = toEthDate(new Date('2024-09-11')); // Non-leap
+// Result: "Meskerem 1, 2017"
+
+const leapYear = toEthDate(new Date('2023-09-11')); // Leap year
+// Result: "Pagume 5, 2016" (if it falls in Pagume)`}
+            </pre>
+          </div>
+        </div>
+      </section>
+    </div>
+  ),
+  "geez-numerals": (
+    <div className="max-w-none">
+      {/* Header */}
+      <header className="mb-10">
+        <h1 className="text-4xl font-bold tracking-tight text-gray-900">
+          🔢 Geez Numerals
+        </h1>
+        <p className="mt-3 max-w-2xl text-lg text-gray-600">
+          Convert Arabic numerals to traditional Geez script with proper
+          formatting rules and special handling for hundreds and ten-thousands
+          multipliers.
+        </p>
+      </header>
+
+      {/* Live Demo */}
+      <GeezNumeralsDemo />
+
+      {/* Features */}
+      <section className="mt-14">
+        <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+          Key Features
+        </h2>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          {[
+            {
+              title: "Traditional Geez Script",
+              desc: "Authentic Geez numeral representation using ፩(1), ፲(10), ፻(100), ፼(10,000) symbols.",
+            },
+            {
+              title: "Smart Multiplier Rules",
+              desc: 'Special handling for 100 and 10,000 - no "1" multiplier is used for these values.',
+            },
+            {
+              title: "Bidirectional Conversion",
+              desc: "Convert from Arabic numerals to Geez and vice versa with full accuracy.",
+            },
+            {
+              title: "Large Number Support",
+              desc: "Handle numbers up to 1,000,000 with proper positional notation.",
+            },
+            {
+              title: "Traditional Rules",
+              desc: "Follows authentic Geez numeral formation rules used in Ethiopian tradition.",
+            },
+            {
+              title: "Type-Safe API",
+              desc: "Full TypeScript support with proper validation and error handling.",
+            },
+          ].map((item) => (
+            <div
+              key={item.title}
+              className="rounded-lg border border-gray-200 bg-white p-4"
+            >
+              <h3 className="text-sm font-semibold text-gray-900">
+                {item.title}
+              </h3>
+              <p className="mt-1 text-sm text-gray-600">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Usage Examples */}
+      <section className="mt-16">
+        <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+          Usage Examples
+        </h2>
+
+        <div className="space-y-6">
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+              Basic Numeral Conversion
+            </h3>
+            <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto">
+              {`import { toEthNumber, fromEthNumber } from 'ethio-intl';
+
+// Arabic to Geez
+const geez = toEthNumber(2025);
+// Result: "፳፻፳፭" (20 + 100 + 5)
+
+const geez100 = toEthNumber(100);
+// Result: "፻" (note: no '1' multiplier)
+
+const geez10000 = toEthNumber(10000);
+// Result: "፼" (note: no '1' multiplier)
+
+// Geez to Arabic
+const arabic = fromEthNumber('፳፻፳፭');
+// Result: 2025`}
+            </pre>
+          </div>
+
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+              Understanding the Rules
+            </h3>
+            <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto">
+              {`import { toEthNumber } from 'ethio-intl';
+
+// Basic numerals
+toEthNumber(1);    // "፩"
+toEthNumber(10);   // "፲"
+toEthNumber(100);  // "፻" (no 1×100)
+toEthNumber(1000); // "፲፻" (10×100)
+toEthNumber(10000); // "፼" (no 1×10000)
+
+// Complex numbers
+toEthNumber(1234);
+// "፲፻፳፬" = 10×100 + 20 + 10 + 4 = 1000 + 20 + 10 + 4
+
+toEthNumber(56789);
+// "፭፼፷፻፸፱" = 5×10000 + 6×1000 + 7×100 + 80 + 9
+
+// Special cases
+toEthNumber(100);  // "፻" (not "፩፻")
+toEthNumber(10000); // "፼" (not "፩፼")`}
+            </pre>
+          </div>
+        </div>
+      </section>
+    </div>
+  ),
+  "multi-language": (
     <div className="max-w-none">
       {/* Header */}
       <header className="mb-10">
@@ -342,8 +596,8 @@ function MyComponent() {
           🌐 Multi-language Support
         </h1>
         <p className="mt-3 max-w-2xl text-lg text-gray-600">
-          Experience the power of modern internationalization with built-in support for
-          Amharic, English, Tigrinya, and Oromo languages.
+          Experience the power of modern internationalization with built-in
+          support for Amharic, English, Tigrinya, and Oromo languages.
         </p>
       </header>
 
@@ -359,28 +613,28 @@ function MyComponent() {
         <div className="grid gap-4 sm:grid-cols-2">
           {[
             {
-              title: 'React Context API Integration',
-              desc: 'Seamlessly integrate internationalization into your React applications with the EthioProvider context.',
+              title: "React Context API Integration",
+              desc: "Seamlessly integrate internationalization into your React applications with the EthioProvider context.",
             },
             {
-              title: 'Variable Interpolation',
-              desc: 'Support for dynamic content replacement with placeholders like {count}, {name}, etc.',
+              title: "Variable Interpolation",
+              desc: "Support for dynamic content replacement with placeholders like {count}, {name}, etc.",
             },
             {
-              title: 'Namespaced Translations',
-              desc: 'Organize translations by feature or page for better maintainability and scalability.',
+              title: "Namespaced Translations",
+              desc: "Organize translations by feature or page for better maintainability and scalability.",
             },
             {
-              title: 'Hot Language Switching',
-              desc: 'Change languages dynamically without page reloads, perfect for user preference settings.',
+              title: "Hot Language Switching",
+              desc: "Change languages dynamically without page reloads, perfect for user preference settings.",
             },
             {
-              title: 'Fallback Support',
-              desc: 'Automatic fallback to default language when translations are missing.',
+              title: "Fallback Support",
+              desc: "Automatic fallback to default language when translations are missing.",
             },
             {
-              title: 'TypeScript Support',
-              desc: 'Full TypeScript integration with proper typing for better developer experience.',
+              title: "TypeScript Support",
+              desc: "Full TypeScript integration with proper typing for better developer experience.",
             },
           ].map((item) => (
             <div
@@ -390,9 +644,7 @@ function MyComponent() {
               <h3 className="text-sm font-semibold text-gray-900">
                 {item.title}
               </h3>
-              <p className="mt-1 text-sm text-gray-600">
-                {item.desc}
-              </p>
+              <p className="mt-1 text-sm text-gray-600">{item.desc}</p>
             </div>
           ))}
         </div>
@@ -410,7 +662,7 @@ function MyComponent() {
               Basic Setup
             </h3>
             <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto">
-{`import { EthioProvider, useEthioIntl } from 'ethio-intl';
+              {`import { EthioProvider, useEthioIntl } from 'ethio-intl';
 
 // Translation resources
 const resources = {
@@ -448,7 +700,7 @@ function App() {
               Using Translations in Components
             </h3>
             <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto">
-{`function MyComponent() {
+              {`function MyComponent() {
   const { t, changeLanguage, currentLanguage } = useEthioIntl();
 
   return (
@@ -472,7 +724,7 @@ function App() {
               Namespaced Translations
             </h3>
             <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto">
-{`const resources = {
+              {`const resources = {
   en: {
     translation: {
       common: {
@@ -516,15 +768,17 @@ function Dashboard() {
       </section>
     </div>
   ),
-  'contributing': (
+  contributing: (
     <div className="prose max-w-none">
       <h1 className="text-4xl font-extrabold text-gray-900 mb-6">
         Contributing
       </h1>
 
       <p className="text-lg text-gray-600 mb-8">
-        Contributions are welcome from the community. Your input—whether through code, documentation, or feedback—
-        helps enhance Ethiopian language support and improves reliability for developers using <strong>Ethio-Intl</strong>.
+        Contributions are welcome from the community. Your input—whether through
+        code, documentation, or feedback— helps enhance Ethiopian language
+        support and improves reliability for developers using{" "}
+        <strong>Ethio-Intl</strong>.
       </p>
 
       <h2 className="text-2xl font-bold text-gray-900 mb-4">Getting Started</h2>
@@ -546,7 +800,9 @@ npm run dev
 npm run build`}
       </pre>
 
-      <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-4">Project Structure</h2>
+      <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-4">
+        Project Structure
+      </h2>
       <pre className="bg-gray-100 p-6 rounded-xl text-sm overflow-x-auto">
         {`src/
 ├── examples/           # Usage examples
@@ -557,13 +813,19 @@ npm run build`}
 └── locales/            # Translation files (en.json, am.json, etc.)`}
       </pre>
 
-      <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-4">Development Workflow</h2>
+      <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-4">
+        Development Workflow
+      </h2>
       <ol className="list-decimal list-inside space-y-4">
         <li>
-          <strong>Select an Issue</strong> — Review open issues on{' '}
-          <a href="https://github.com/your-org/ethio-intl/issues" className="text-blue-600 underline">
+          <strong>Select an Issue</strong> — Review open issues on{" "}
+          <a
+            href="https://github.com/your-org/ethio-intl/issues"
+            className="text-blue-600 underline"
+          >
             GitHub
-          </a> and comment if you plan to work on it.
+          </a>{" "}
+          and comment if you plan to work on it.
         </li>
         <li>
           <strong>Create a Branch</strong>
@@ -574,7 +836,9 @@ git checkout -b fix/issue-number`}
           </pre>
         </li>
         <li>
-          <strong>Implement Changes</strong> — Adhere to the existing code style, add tests, update documentation, and ensure TypeScript types are correct.
+          <strong>Implement Changes</strong> — Adhere to the existing code
+          style, add tests, update documentation, and ensure TypeScript types
+          are correct.
         </li>
         <li>
           <strong>Test Your Changes</strong>
@@ -594,69 +858,106 @@ python -m http.server 5500
 git commit -m "feat: add new feature description"`}
           </pre>
           <p className="text-sm text-gray-600 mt-2">
-            Use conventional commit prefixes: <strong>feat:</strong> new features, <strong>fix:</strong> bug fixes,
-            <strong>docs:</strong> documentation, <strong>test:</strong> tests, <strong>refactor:</strong> refactoring.
+            Use conventional commit prefixes: <strong>feat:</strong> new
+            features, <strong>fix:</strong> bug fixes,
+            <strong>docs:</strong> documentation, <strong>test:</strong> tests,{" "}
+            <strong>refactor:</strong> refactoring.
           </p>
         </li>
         <li>
-          <strong>Submit a Pull Request</strong> — Push your branch to GitHub, create a PR with a clear description, reference related issues, and ensure all checks pass.
+          <strong>Submit a Pull Request</strong> — Push your branch to GitHub,
+          create a PR with a clear description, reference related issues, and
+          ensure all checks pass.
         </li>
       </ol>
 
-      <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-4">Code Guidelines</h2>
+      <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-4">
+        Code Guidelines
+      </h2>
       <ul className="list-disc list-inside space-y-2">
         <li>
-          <strong>TypeScript:</strong> Use proper types and interfaces; avoid using <code>any</code>.
+          <strong>TypeScript:</strong> Use proper types and interfaces; avoid
+          using <code>any</code>.
         </li>
         <li>
-          <strong>React:</strong> Use functional components and hooks; follow best practices.
+          <strong>React:</strong> Use functional components and hooks; follow
+          best practices.
         </li>
         <li>
-          <strong>Testing:</strong> Write unit tests, maintain coverage above 80%, and handle success and error cases.
+          <strong>Testing:</strong> Write unit tests, maintain coverage above
+          80%, and handle success and error cases.
         </li>
         <li>
-          <strong>Documentation:</strong> Keep README and API docs updated; include examples for new features.
+          <strong>Documentation:</strong> Keep README and API docs updated;
+          include examples for new features.
         </li>
       </ul>
 
-      <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-4">Adding Languages</h2>
+      <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-4">
+        Adding Languages
+      </h2>
       <ol className="list-decimal list-inside space-y-2">
-        <li>Create <code>src/locales/[lang].json</code> following the existing JSON structure.</li>
+        <li>
+          Create <code>src/locales/[lang].json</code> following the existing
+          JSON structure.
+        </li>
         <li>Add the new language to examples and documentation.</li>
         <li>Test thoroughly with all components.</li>
       </ol>
 
-      <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-4">Adding Features</h2>
+      <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-4">
+        Adding Features
+      </h2>
       <p className="text-gray-600 mb-4">
-        When adding new i18n, transliteration, or utility features, follow these guidelines:
+        When adding new i18n, transliteration, or utility features, follow these
+        guidelines:
       </p>
       <ul className="list-disc list-inside space-y-2">
         <li>
-          <strong>i18n Features:</strong> Update <code>src/localization/EthioProvider.tsx</code>, export from <code>useEthioIntl.ts</code>,
-          update types, add tests, and update documentation.
+          <strong>i18n Features:</strong> Update{" "}
+          <code>src/localization/EthioProvider.tsx</code>, export from{" "}
+          <code>useEthioIntl.ts</code>, update types, add tests, and update
+          documentation.
         </li>
         <li>
-          <strong>Transliteration Features:</strong> Update <code>amharicMap.ts</code> and <code>useTransliterate.ts</code>, add tests.
+          <strong>Transliteration Features:</strong> Update{" "}
+          <code>amharicMap.ts</code> and <code>useTransliterate.ts</code>, add
+          tests.
         </li>
         <li>
-          <strong>Utilities:</strong> Add new functions in <code>src/utils/</code>, export from <code>index.ts</code>, and add tests and documentation.
+          <strong>Utilities:</strong> Add new functions in{" "}
+          <code>src/utils/</code>, export from <code>index.ts</code>, and add
+          tests and documentation.
         </li>
       </ul>
 
-      <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-4">Reporting Bugs</h2>
+      <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-4">
+        Reporting Bugs
+      </h2>
       <p className="text-gray-600 mb-4">
-        Use <a href="https://github.com/your-org/ethio-intl/issues" className="text-blue-600 underline">GitHub Issues</a>.
-        Provide clear reproduction steps, relevant environment information, and screenshots if necessary.
+        Use{" "}
+        <a
+          href="https://github.com/your-org/ethio-intl/issues"
+          className="text-blue-600 underline"
+        >
+          GitHub Issues
+        </a>
+        . Provide clear reproduction steps, relevant environment information,
+        and screenshots if necessary.
       </p>
 
-      <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-4">Documentation</h2>
+      <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-4">
+        Documentation
+      </h2>
       <ul className="list-disc list-inside space-y-2">
         <li>Keep README.md and API documentation up to date.</li>
         <li>Add usage examples for new features.</li>
         <li>Maintain an up-to-date changelog.</li>
       </ul>
 
-      <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-4">Code of Conduct</h2>
+      <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-4">
+        Code of Conduct
+      </h2>
       <ul className="list-disc list-inside space-y-2">
         <li>Be respectful and inclusive.</li>
         <li>Provide constructive feedback.</li>
@@ -664,9 +965,12 @@ git commit -m "feat: add new feature description"`}
         <li>Maintain professional communication at all times.</li>
       </ul>
 
-      <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-4">Getting Help</h2>
+      <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-4">
+        Getting Help
+      </h2>
       <p className="text-gray-600 mb-4">
-        Review existing issues and documentation, ask questions in GitHub Discussions, or join the community chat for assistance.
+        Review existing issues and documentation, ask questions in GitHub
+        Discussions, or join the community chat for assistance.
       </p>
 
       <p className="text-lg text-gray-600 mt-6">
@@ -675,19 +979,22 @@ git commit -m "feat: add new feature description"`}
     </div>
   ),
 
-  'api': (
+  api: (
     <div className="prose max-w-none">
       <h1 className="text-4xl font-extrabold text-gray-900 mb-6">
         API Reference
       </h1>
 
       <p className="text-lg text-gray-600 mb-8">
-        Complete API documentation for <strong>Ethio-Intl</strong> components, hooks, utilities, and localization.
+        Complete API documentation for <strong>Ethio-Intl</strong> components,
+        hooks, utilities, and localization.
       </p>
 
       {/* SmartInput Component */}
       <section className="mb-10">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">SmartInput Component</h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">
+          SmartInput Component
+        </h2>
 
         <h3 className="text-xl font-semibold text-gray-900 mb-2">Props</h3>
         <pre className="bg-gray-100 p-5 rounded-lg overflow-x-auto text-sm mb-6">
@@ -701,7 +1008,9 @@ git commit -m "feat: add new feature description"`}
 }`}
         </pre>
 
-        <h3 className="text-xl font-semibold text-gray-900 mb-2">Example Usage</h3>
+        <h3 className="text-xl font-semibold text-gray-900 mb-2">
+          Example Usage
+        </h3>
         <pre className="bg-gray-50 p-5 rounded-lg overflow-x-auto text-sm">
           {`import { SmartInput } from 'ethio-intl';
 
@@ -718,7 +1027,9 @@ git commit -m "feat: add new feature description"`}
 
       {/* useTransliterate Hook */}
       <section className="mb-10">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">useTransliterate Hook</h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">
+          useTransliterate Hook
+        </h2>
 
         <h3 className="text-xl font-semibold text-gray-900 mb-2">Parameters</h3>
         <pre className="bg-gray-100 p-5 rounded-lg overflow-x-auto text-sm mb-4">
@@ -728,7 +1039,9 @@ git commit -m "feat: add new feature description"`}
 ): UseTransliterateResult`}
         </pre>
 
-        <h3 className="text-xl font-semibold text-gray-900 mb-2">Return Type</h3>
+        <h3 className="text-xl font-semibold text-gray-900 mb-2">
+          Return Type
+        </h3>
         <pre className="bg-gray-50 p-5 rounded-lg overflow-x-auto text-sm mb-4">
           {`interface UseTransliterateResult {
   displayValue: string;
@@ -738,7 +1051,9 @@ git commit -m "feat: add new feature description"`}
 }`}
         </pre>
 
-        <h3 className="text-xl font-semibold text-gray-900 mb-2">Example Usage</h3>
+        <h3 className="text-xl font-semibold text-gray-900 mb-2">
+          Example Usage
+        </h3>
         <pre className="bg-gray-100 p-5 rounded-lg overflow-x-auto text-sm">
           {`import { useTransliterate } from 'ethio-intl';
 
@@ -761,10 +1076,14 @@ function MyComponent() {
 
       {/* Utilities */}
       <section className="mb-10">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">Utilities & Helpers</h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">
+          Utilities & Helpers
+        </h2>
 
         <h3 className="text-xl font-semibold text-gray-900 mb-2">amharicMap</h3>
-        <p className="text-gray-600 mb-2">Mapping of English keys to Amharic characters.</p>
+        <p className="text-gray-600 mb-2">
+          Mapping of English keys to Amharic characters.
+        </p>
         <pre className="bg-gray-50 p-5 rounded-lg overflow-x-auto text-sm mb-4">
           {`import { amharicMap } from 'ethio-intl';
 
@@ -775,7 +1094,9 @@ console.log(amharicMap['q'].wa); // "ቋ"`}
         </pre>
 
         <h3 className="text-xl font-semibold text-gray-900 mb-2">reverseMap</h3>
-        <p className="text-gray-600 mb-2">Lookup from Amharic character back to English key.</p>
+        <p className="text-gray-600 mb-2">
+          Lookup from Amharic character back to English key.
+        </p>
         <pre className="bg-gray-100 p-5 rounded-lg overflow-x-auto text-sm mb-4">
           {`import { reverseMap } from 'ethio-intl';
 
@@ -783,7 +1104,9 @@ console.log(reverseMap['ሁ']); // "h"
 console.log(reverseMap['ባ']); // "b"`}
         </pre>
 
-        <h3 className="text-xl font-semibold text-gray-900 mb-2">Ethiopian Numerals & Calendar</h3>
+        <h3 className="text-xl font-semibold text-gray-900 mb-2">
+          Ethiopian Numerals & Calendar
+        </h3>
         <pre className="bg-gray-50 p-5 rounded-lg overflow-x-auto text-sm mb-4">
           {`import { toEthiopianNumerals, fromEthiopianNumerals, toEthiopianDate, fromEthiopianDate } from 'ethio-intl';
 
@@ -801,7 +1124,8 @@ const gregorian = fromEthiopianDate(2017, 4, 7); // Date object`}
       <section className="mb-10">
         <h2 className="text-2xl font-bold text-gray-900 mb-4">Localization</h2>
         <p className="text-gray-600 mb-4">
-          Use <code>EthioProvider</code> and <code>useEthioIntl</code> to manage languages.
+          Use <code>EthioProvider</code> and <code>useEthioIntl</code> to manage
+          languages.
         </p>
         <pre className="bg-gray-100 p-5 rounded-lg overflow-x-auto text-sm">
           {`import { EthioProvider, useEthioIntl } from 'ethio-intl';
