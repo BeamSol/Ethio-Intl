@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "ethio-intl": "file:..",
     "react": "^19.2.3",
     "react-dom": "^19.2.3"
   },
