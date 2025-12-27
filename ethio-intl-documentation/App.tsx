@@ -9,6 +9,7 @@ const NAVIGATION: NavItem[] = [
   { id: 'welcome', label: 'Welcome' },
   { id: 'getting-started', label: 'Getting Started' },
   { id: 'transliteration-guide', label: 'Transliteration System' },
+  { id: 'multi-language', label: 'Multi-language' },
   { id: 'examples', label: 'Examples & Demos' },
   { id: 'contributing', label: 'Contributing' },
   { id: 'api', label: 'API' },
