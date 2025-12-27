@@ -326,7 +326,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Support
 
 - 📧 **Email**: support@ethio-intl.dev
-- 🐛 **Issues**: [GitHub Issues](https://github.com/ethio-intl/ethio-intl/issues)
+- 🐛 **Issues**: [GitHub Issues](https://github.com/BeamSol/Ethio-Intl/issues)
 - 💬 **Discussions**: [GitHub Discussions](https://github.com/ethio-intl/ethio-intl/discussions)
 
 ---
@@ -337,9 +337,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
 
-  [🌐 Website](https://ethio-intl.github.io) •
-  [📚 Documentation](https://ethio-intl.github.io/docs) •
+  [🌐 Website](https://ethio-intl-documentation.vercel.app/) •
+  [📚 Documentation](https://github.com/BeamSol/Ethio-Intl/tree/main/docs) •
   [🎮 Demo](https://ethio-intl.github.io/demo) •
-  [🐙 GitHub](https://github.com/ethio-intl/ethio-intl)
+  [🐙 GitHub](https://github.com/BeamSol/Ethio-Intl)
 
 </div>
