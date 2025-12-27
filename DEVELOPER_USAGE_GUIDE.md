@@ -1,4 +1,4 @@
-# Developer Usage Guide - Ethio-Intl
+# Developer Usage Guide - Ethio-Intll
 
 ## Table of Contents
 - [Overview](#overview)
@@ -83,6 +83,7 @@ root.render(
 
 ### Advanced Provider Configuration
 
+{% raw %}
 ```tsx
 import { EthioProvider } from 'ethio-intl';
 
@@ -102,6 +103,7 @@ function App() {
   );
 }
 ```
+{% endraw %}
 
 ### Non-React Setup (Vanilla JS)
 
@@ -740,3 +742,4 @@ import { toEthDate } from 'ethio-intl';
 ---
 
 *Happy coding with Ethio-Intl! 🇪🇹*
+
