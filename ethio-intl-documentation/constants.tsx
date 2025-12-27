@@ -1,6 +1,7 @@
 
 import React from 'react';
 import LiveDemo from './components/LiveDemo';
+import MultiLanguageDemo from './components/MultiLanguageDemo';
 
 export const DOC_CONTENT: Record<string, React.ReactNode> = {
   'welcome': (
@@ -331,6 +332,188 @@ function MyComponent() {
           </p>
         </section>
       </div>
+    </div>
+  ),
+  'multi-language': (
+    <div className="max-w-none">
+      {/* Header */}
+      <header className="mb-10">
+        <h1 className="text-4xl font-bold tracking-tight text-gray-900">
+          🌐 Multi-language Support
+        </h1>
+        <p className="mt-3 max-w-2xl text-lg text-gray-600">
+          Experience the power of modern internationalization with built-in support for
+          Amharic, English, Tigrinya, and Oromo languages.
+        </p>
+      </header>
+
+      {/* Live Demo */}
+      <MultiLanguageDemo />
+
+      {/* Features */}
+      <section className="mt-14">
+        <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+          Key Features
+        </h2>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          {[
+            {
+              title: 'React Context API Integration',
+              desc: 'Seamlessly integrate internationalization into your React applications with the EthioProvider context.',
+            },
+            {
+              title: 'Variable Interpolation',
+              desc: 'Support for dynamic content replacement with placeholders like {count}, {name}, etc.',
+            },
+            {
+              title: 'Namespaced Translations',
+              desc: 'Organize translations by feature or page for better maintainability and scalability.',
+            },
+            {
+              title: 'Hot Language Switching',
+              desc: 'Change languages dynamically without page reloads, perfect for user preference settings.',
+            },
+            {
+              title: 'Fallback Support',
+              desc: 'Automatic fallback to default language when translations are missing.',
+            },
+            {
+              title: 'TypeScript Support',
+              desc: 'Full TypeScript integration with proper typing for better developer experience.',
+            },
+          ].map((item) => (
+            <div
+              key={item.title}
+              className="rounded-lg border border-gray-200 bg-white p-4"
+            >
+              <h3 className="text-sm font-semibold text-gray-900">
+                {item.title}
+              </h3>
+              <p className="mt-1 text-sm text-gray-600">
+                {item.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Usage Examples */}
+      <section className="mt-16">
+        <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+          Usage Examples
+        </h2>
+
+        <div className="space-y-6">
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+              Basic Setup
+            </h3>
+            <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto">
+{`import { EthioProvider, useEthioIntl } from 'ethio-intl';
+
+// Translation resources
+const resources = {
+  en: {
+    translation: {
+      welcome: 'Welcome!',
+      greeting: 'Hello {name}!'
+    }
+  },
+  am: {
+    translation: {
+      welcome: 'እንኳን ደህና መጡ!',
+      greeting: 'ሰላም {name}!'
+    }
+  }
+};
+
+// Wrap your app
+function App() {
+  return (
+    <EthioProvider
+      resources={resources}
+      defaultLanguage="am"
+      fallbackLanguage="en"
+    >
+      <MyComponent />
+    </EthioProvider>
+  );
+}`}
+            </pre>
+          </div>
+
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+              Using Translations in Components
+            </h3>
+            <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto">
+{`function MyComponent() {
+  const { t, changeLanguage, currentLanguage } = useEthioIntl();
+
+  return (
+    <div>
+      <h1>{t('welcome')}</h1>
+      <p>{t('greeting', { name: 'World' })}</p>
+
+      <button onClick={() => changeLanguage('am')}>
+        Switch to Amharic
+      </button>
+
+      <p>Current language: {currentLanguage}</p>
+    </div>
+  );
+}`}
+            </pre>
+          </div>
+
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+              Namespaced Translations
+            </h3>
+            <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto">
+{`const resources = {
+  en: {
+    translation: {
+      common: {
+        save: 'Save',
+        cancel: 'Cancel'
+      },
+      dashboard: {
+        title: 'Dashboard',
+        welcome: 'Welcome back!'
+      }
+    }
+  },
+  am: {
+    translation: {
+      common: {
+        save: 'አስቀምጥ',
+        cancel: 'ሰርዝ'
+      },
+      dashboard: {
+        title: 'ዳሽቦርድ',
+        welcome: 'እንኳን ደህና መጡ!'
+      }
+    }
+  }
+};
+
+function Dashboard() {
+  const { tNamespace } = useEthioIntl();
+
+  return (
+    <div>
+      <h1>{tNamespace('dashboard', 'title')}</h1>
+      <p>{tNamespace('dashboard', 'welcome')}</p>
+      <button>{tNamespace('common', 'save')}</button>
+    </div>
+  );
+}`}
+            </pre>
+          </div>
+        </div>
+      </section>
     </div>
   ),
   'contributing': (
