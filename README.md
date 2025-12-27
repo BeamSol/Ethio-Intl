@@ -14,8 +14,9 @@ A modern JavaScript SDK for Ethiopian web applications with Amharic transliterat
 
 Click the image below to watch our project video:
 
-[![Watch the video](/assets/image.png)](https://youtube.com/shorts/V1f8JCCibDg?si=8kT7Hinbp_ClhJ9i)
+[![Watch the video](/assets/image.png)](https://youtube.com/shorts/qNbTvrurcp8?feature=share)
 
+https://youtube.com/shorts/qNbTvrurcp8?feature=share
 
 
 ## 🎮 Live Demo
