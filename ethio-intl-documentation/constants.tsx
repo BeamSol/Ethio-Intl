@@ -104,7 +104,7 @@ export const DOC_CONTENT: Record<string, React.ReactNode> = {
 
               <ul className="space-y-1">
                 {framework.features.map((feature, index) => (
-                  <li key={index} className="flex items-center text-sm text-gray-600">
+                  <li key={feature} className="flex items-center text-sm text-gray-600">
                     <span className="mr-2 text-green-500">✓</span>
                     {feature}
                   </li>
