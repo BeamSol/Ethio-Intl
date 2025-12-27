@@ -29,7 +29,7 @@ const GeezNumeralsDemo: React.FC = () => {
       if (tenThousands === 1) {
         result += GEEZ_NUMERALS.tenThousands;
       } else if (tenThousands >= 2 && tenThousands <= 9) {
-        result += GEEZ_NUMERALS.tens[tenThousands] + GEEZ_NUMERALS.tenThousands;
+        result += GEEZ_NUMERALS.ones[tenThousands] + GEEZ_NUMERALS.tenThousands;
       } else if (tenThousands >= 10) {
         result += toEthNumber(tenThousands) + GEEZ_NUMERALS.tenThousands;
       }
@@ -43,7 +43,7 @@ const GeezNumeralsDemo: React.FC = () => {
       if (hundreds === 1) {
         result += GEEZ_NUMERALS.hundreds;
       } else if (hundreds >= 2 && hundreds <= 9) {
-        result += GEEZ_NUMERALS.tens[hundreds] + GEEZ_NUMERALS.hundreds;
+        result += GEEZ_NUMERALS.ones[hundreds] + GEEZ_NUMERALS.hundreds;
       } else if (hundreds >= 10) {
         result += toEthNumber(hundreds) + GEEZ_NUMERALS.hundreds;
       }
