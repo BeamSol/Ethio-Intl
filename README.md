@@ -347,7 +347,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
 
-  [🌐 Website](https://ethio-intl-documentation.vercel.app/) •
+  [🌐 Website](https://ethio-intl.vercel.app/) •
   [📚 Documentation](https://github.com/BeamSol/Ethio-Intl/tree/main/docs) •
   [🎮 Demo](https://ethio-intl.github.io/demo) •
   [🐙 GitHub](https://github.com/BeamSol/Ethio-Intl)
