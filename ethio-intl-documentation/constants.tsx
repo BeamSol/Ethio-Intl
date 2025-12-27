@@ -2,7 +2,7 @@ import React from "react";
 import LiveDemo from "./components/LiveDemo";
 import MultiLanguageDemo from "./components/MultiLanguageDemo";
 import GeezNumeralsDemo from "./components/GeezNumeralsDemo";
-import CalendarDemo from "./components/calendarDemo";
+import CalendarDemo from "./components/CalendarDemo";
 
 export const DOC_CONTENT: Record<string, React.ReactNode> = {
   welcome: (
