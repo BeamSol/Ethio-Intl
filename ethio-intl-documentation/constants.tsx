@@ -5,6 +5,226 @@ import GeezNumeralsDemo from "./components/GeezNumeralsDemo";
 import CalendarDemo from "./components/CalendarDemo";
 
 export const DOC_CONTENT: Record<string, React.ReactNode> = {
+  frameworks: (
+    <div className="max-w-none">
+      {/* Header */}
+      <header className="mb-10">
+        <h1 className="text-4xl font-bold tracking-tight text-gray-900">
+          Supported Frameworks
+        </h1>
+        <p className="mt-3 max-w-2xl text-lg text-gray-600">
+          Ethio-Intl works seamlessly with modern JavaScript frameworks and environments,
+          providing the same Ethiopian localization features across different tech stacks.
+        </p>
+      </header>
+
+      {/* Framework Grid */}
+      <section className="mb-16">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {[
+            {
+              name: "React",
+              icon: "⚛️",
+              description: "Full React integration with hooks, context API, and component ecosystem.",
+              features: ["useEthioIntl hook", "EthioProvider context", "SmartInput component", "Real-time transliteration"],
+              color: "bg-gradient-to-r from-blue-500 to-blue-600"
+            },
+            {
+              name: "Vanilla JavaScript",
+              icon: "🟨",
+              description: "Direct JavaScript usage without framework dependencies.",
+              features: ["ESM imports", "Tree-shaking friendly", "Zero dependencies", "Universal compatibility"],
+              color: "bg-gradient-to-r from-yellow-500 to-yellow-600"
+            },
+            {
+              name: "Next.js",
+              icon: "▲",
+              description: "Server-side rendering support with Next.js applications.",
+              features: ["SSR compatibility", "Static generation", "API routes integration", "Dynamic imports"],
+              color: "bg-gradient-to-r from-gray-800 to-gray-900"
+            },
+            {
+              name: "Vue.js",
+              icon: "💚",
+              description: "Vue 3 composition API and options API support.",
+              features: ["Vue composables", "Plugin integration", "Reactive state", "Template directives"],
+              color: "bg-gradient-to-r from-green-500 to-green-600"
+            },
+            {
+              name: "Angular",
+              icon: "🅰️",
+              description: "Angular services, pipes, and dependency injection.",
+              features: ["Angular services", "Custom pipes", "Dependency injection", "Change detection"],
+              color: "bg-gradient-to-r from-red-500 to-red-600"
+            },
+            {
+              name: "Svelte",
+              icon: "🧡",
+              description: "Svelte stores and reactive statements integration.",
+              features: ["Svelte stores", "Reactive statements", "Component integration", "Bundle optimization"],
+              color: "bg-gradient-to-r from-orange-500 to-orange-600"
+            },
+            {
+              name: "Node.js",
+              icon: "🟢",
+              description: "Server-side JavaScript with full Ethiopian localization.",
+              features: ["Server-side rendering", "API development", "CLI tools", "Backend integration"],
+              color: "bg-gradient-to-r from-green-600 to-green-700"
+            },
+            {
+              name: "TypeScript",
+              icon: "🔷",
+              description: "Full TypeScript support with type definitions.",
+              features: ["Type definitions", "IntelliSense", "Type safety", "IDE integration"],
+              color: "bg-gradient-to-r from-blue-600 to-blue-700"
+            },
+            {
+              name: "Browser",
+              icon: "🌐",
+              description: "Direct browser usage with CDN or bundler integration.",
+              features: ["CDN delivery", "UMD builds", "Browser compatibility", "Progressive enhancement"],
+              color: "bg-gradient-to-r from-purple-500 to-purple-600"
+            }
+          ].map((framework) => (
+            <div
+              key={framework.name}
+              className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow"
+            >
+              <div className={`inline-flex h-12 w-12 items-center justify-center rounded-lg ${framework.color} text-white text-xl mb-4`}>
+                {framework.icon}
+              </div>
+
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                {framework.name}
+              </h3>
+
+              <p className="text-sm text-gray-600 mb-4">
+                {framework.description}
+              </p>
+
+              <ul className="space-y-1">
+                {framework.features.map((feature, index) => (
+                  <li key={feature} className="flex items-center text-sm text-gray-600">
+                    <span className="mr-2 text-green-500">✓</span>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Installation Examples */}
+      <section className="mb-16">
+        <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+          Installation & Usage
+        </h2>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+              npm / yarn
+            </h3>
+            <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto">
+{`# Install
+npm install ethio-intl
+# or
+yarn add ethio-intl
+
+# Import
+import { toEthDate, toEthNumber } from 'ethio-intl';`}
+            </pre>
+          </div>
+
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+              CDN (Browser)
+            </h3>
+            <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto">
+{`<script src="https://cdn.jsdelivr.net/npm/ethio-intl"></script>
+<script>
+  const { toEthDate, toEthNumber } = window.EthioIntl;
+</script>`}
+            </pre>
+          </div>
+        </div>
+      </section>
+
+      {/* Integration Examples */}
+      <section className="mb-16">
+        <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+          Framework Integration Examples
+        </h2>
+
+        <div className="space-y-6">
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+              React Component
+            </h3>
+            <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto">
+{`import { EthioProvider, useEthioIntl } from 'ethio-intl';
+
+function App() {
+  return (
+    <EthioProvider resources={translations} defaultLanguage="am">
+      <MyComponent />
+    </EthioProvider>
+  );
+}
+
+function MyComponent() {
+  const { t } = useEthioIntl();
+  return <h1>{t('welcome')}</h1>;
+}`}
+            </pre>
+          </div>
+
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+              Vue.js Composition API
+            </h3>
+            <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto">
+{`<template>
+  <div>
+    <h1>{{ t('welcome') }}</h1>
+    <p>{{ ethiopianDate }}</p>
+  </div>
+</template>
+
+<script setup>
+import { ref, computed } from 'vue';
+import { toEthDate } from 'ethio-intl';
+
+const ethiopianDate = computed(() =>
+  toEthDate(new Date(), 'am')
+);
+</script>`}
+            </pre>
+          </div>
+
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+              Node.js Server
+            </h3>
+            <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg text-sm overflow-x-auto">
+{`const express = require('express');
+const { toEthDate, toEthNumber } = require('ethio-intl');
+
+const app = express();
+
+app.get('/api/date', (req, res) => {
+  const ethDate = toEthDate(new Date(), 'am');
+  res.json({ ethiopianDate: ethDate });
+});
+
+app.listen(3000);`}
+            </pre>
+          </div>
+        </div>
+      </section>
+    </div>
+  ),
   welcome: (
     <div className="max-w-none">
       {/* Page header */}

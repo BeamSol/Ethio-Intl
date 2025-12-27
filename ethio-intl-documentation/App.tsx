@@ -7,6 +7,7 @@ import { DOC_CONTENT } from "./constants";
 const NAVIGATION: NavItem[] = [
   { id: "welcome", label: "Welcome" },
   { id: "getting-started", label: "Getting Started" },
+  { id: "frameworks", label: "Frameworks" },
   { id: "transliteration-guide", label: "Transliteration System" },
   { id: "calendar", label: "Calendar" },
   { id: "geez-numerals", label: "Geez Numerals" },
@@ -27,7 +28,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gray-50 text-gray-900 flex flex-col">
       <Navbar />
 
       <div className="flex flex-grow w-full">
@@ -42,7 +43,7 @@ function App() {
         <div className="md:hidden fixed bottom-6 right-6 z-50">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="w-14 h-14 bg-blue-600 text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-blue-700 transition-colors"
+            className="w-14 h-14 bg-blue-600 text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-blue-700"
           >
             {isMobileMenuOpen ? (
               <svg
