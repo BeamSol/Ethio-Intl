@@ -14,6 +14,11 @@ const GeezNumeralsDemo: React.FC = () => {
 
   // Geez numeral conversion function (matching library exactly)
   const toEthNumber = (num: number): string => {
+    // Handle empty/zero state
+    if (num === 0) {
+      return "";
+    }
+
     if (!Number.isInteger(num) || num < 1 || num > 1000000) {
       return "Invalid number";
     }
@@ -71,7 +76,15 @@ const GeezNumeralsDemo: React.FC = () => {
   }, [inputNumber]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value);
+    const inputValue = e.target.value;
+
+    // Handle empty input - reset to empty state
+    if (inputValue === "") {
+      setInputNumber(0); // Use 0 to represent empty state
+      return;
+    }
+
+    const value = parseInt(inputValue);
     if (!isNaN(value) && value >= 1 && value <= 1000000) {
       setInputNumber(value);
     }
@@ -105,7 +118,7 @@ const GeezNumeralsDemo: React.FC = () => {
             </label>
             <input
               type="number"
-              value={inputNumber}
+              value={inputNumber === 0 ? "" : inputNumber}
               onChange={handleInputChange}
               min="1"
               max="1000000"
